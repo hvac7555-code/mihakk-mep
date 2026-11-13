@@ -155,6 +155,7 @@ table.t th{color:var(--muted);font-size:14px;font-weight:600}
 .day input{width:22px;height:22px;margin-top:4px;accent-color:var(--good)}
 .tag{display:inline-block;font-size:12px;font-weight:700;border-radius:6px;padding:1px 7px;margin-inline-start:6px}
 .muted{color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .callout{border-inline-start:4px solid var(--accent);background:var(--card);border-radius:10px;padding:12px 16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-inline-end:1px solid var(--line)}
 .more{display:block;margin:12px auto}
 
@@ -201,13 +202,13 @@ table.t th{color:var(--muted);font-size:14px;font-weight:600}
 </div></header>
 <div class="backdrop" id="backdrop"></div>
 <aside class="side" id="side" aria-label="القائمة الجانبية">
-  <nav class="tabs" id="tabs"><a href="#home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>الرئيسية</span></a><a href="#bank"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>بنك الأسئلة</span></a><a href="#flash"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="14" height="12" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v10"/></svg><span>البطاقات</span></a><a href="#quiz"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg><span>اختبار سريع</span></a><a href="#mock"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>مقابلة تجريبية</span></a><a href="#office"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3"/></svg><span>المكتب الفني</span></a><a href="#codes"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2z"/><path d="M22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></svg><span>الأكواد والأرقام</span></a><a href="#plan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>خطتي</span></a></nav>
+  <nav class="tabs" id="tabs"><a href="#home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>الرئيسية</span></a><a href="#bank"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>بنك الأسئلة</span></a><a href="#flash"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="14" height="12" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v10"/></svg><span>البطاقات</span></a><a href="#quiz"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg><span>اختبار سريع</span></a><a href="#calc"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h2M12 18h2"/></svg><span>تدريب الحسابات</span></a><a href="#spot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5M8 11h6M11 8v6"/></svg><span>اكتشف الخطأ</span></a><a href="#mock"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>مقابلة تجريبية</span></a><a href="#office"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3"/></svg><span>المكتب الفني</span></a><a href="#codes"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2z"/><path d="M22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></svg><span>الأكواد والأرقام</span></a><a href="#plan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>خطتي</span></a></nav>
   <div class="side-h">أقسام بنك الأسئلة</div>
   <div id="secNav"></div>
 </aside>
 <div class="shell"><main class="wrap" id="app"></main></div>
 <div class="card" id="iosTip" role="dialog" aria-label="طريقة التثبيت"><b>تثبيت على الآيفون أو الآيباد</b><p style="margin:6px 0">افتح المنصة في Safari، ثم اضغط زر المشاركة <b>⬆︎</b> واختر <b>«إضافة إلى الشاشة الرئيسية»</b>.</p><button class="btn sm" id="iosClose">تمام</button></div>
-<script>window.INSTALL_URL="https://mihakk-mep.netlify.app/";</script>
+<script>window.INSTALL_URL="https://hvac7555-code.github.io/mihakk-mep/";</script>
 <script src="data.js"></script>
 <script>
 (function(){
@@ -268,7 +269,7 @@ async function toggleMic(key,btn){if(!DICT)return;
 async function grade(qid,key,after){const q=byId[qid],ta=document.getElementById('ta-'+key),out=document.getElementById('vd-'+key);
   const mine=(ta.value||'').trim();if(!mine){out.innerHTML='<p class="hint">اكتب إجابتك أولاً.</p>';return;}
   out.innerHTML='<div class="verdict">جارٍ التقييم...</div>';
-  const prompt=`أنت محاور تقني خبير في وظائف MEP (تكييف وحريق وسباكة ومكتب فني) في السعودية. قيّم إجابة المرشح على سؤال مقابلة.
+  const prompt=FU[key]?fuPrompt(q,FU[key],mine):`أنت محاور تقني خبير في وظائف MEP (تكييف وحريق وسباكة ومكتب فني) في السعودية. قيّم إجابة المرشح على سؤال مقابلة.
 السؤال: ${q.q}
 الإجابة النموذجية: ${plain(q)}
 المرجع: ${q.r.join(' | ')}
@@ -281,8 +282,8 @@ async function grade(qid,key,after){const q=byId[qid],ta=document.getElementById
     ${(v.good||[]).length?`<p><b>نقاط قوية:</b> ${v.good.map(esc).join('، ')}</p>`:''}
     ${(v.missing||[]).length?`<p><b>ينقصك:</b> ${v.missing.map(esc).join('، ')}</p>`:''}
     ${v.better?`<p><b>صياغة أقوى:</b> ${esc(v.better)}</p>`:''}
-    ${v.followup?`<p><b>سؤال المتابعة المتوقع:</b> ${esc(v.followup)}</p>`:''}</div>`;
-    if(after)after(sc);}
+    ${v.followup&&(!SAMPLE||(FU[key]&&FU[key].depth>=2))?`<p><b>سؤال المتابعة المتوقع:</b> ${esc(v.followup)}</p>`:''}</div>${fuButton(key,qid,mine,v.followup)}`;
+    if(after&&!FU[key])after(sc);}
   catch(e){out.innerHTML=`<div class="verdict">${e&&e.code==='not_granted'?'لم يُسمح بالتقييم الآلي. قارن إجابتك بالإجابة النموذجية.':e&&e.code==='rate_limited'?'كثرة الطلبات الآن. حاول بعد دقيقة.':'تعذّر التقييم الآن. حاول مرة أخرى.'}</div>`;}}
 document.addEventListener('click',e=>{const m=e.target.closest('[data-mic]');if(m){toggleMic(m.dataset.mic,m);return;}
   const g=e.target.closest('[data-grade]');if(g){const [id,k]=g.dataset.grade.split('|');grade(id,k,window._afterGrade&&window._afterGrade[k]);}});
@@ -292,7 +293,7 @@ function home(){const c=counts();const tot=Q.length,known=Object.values(S.st).fi
   const weak=weakest();const day=D.plan.findIndex((p,i)=>!S.plan['d'+i]);
   return `<section class="hero"><div><h1 style="font-size:32px">جاهز للمقابلة القادمة؟</h1>
   <p>${ar(tot)} سؤالاً بإجاباتها ومرجع الكود لكل سؤال، في التكييف والحريق والسباكة والمكتب الفني. ذاكر بالبطاقات، اختبر نفسك، وجرّب مقابلة كاملة بالتوقيت${SAMPLE?' مع تقييم فوري لإجاباتك':''}.</p></div>
-  <div class="row"><a class="btn pri" href="#mock">ابدأ مقابلة تجريبية</a><a class="btn" href="#flash">راجع بالبطاقات</a></div></section>
+  <div class="row"><a class="btn pri" href="#mock">ابدأ مقابلة تجريبية</a><a class="btn" href="#calc">تدريب الحسابات</a><a class="btn" href="#spot">اكتشف الخطأ</a></div></section>
   <div class="grid g4">
    <div class="card tile"><div class="big">${ar(tot)}</div><div class="lbl">سؤال في البنك</div></div>
    <div class="card tile"><div class="big" style="color:var(--good)">${ar(known)}</div><div class="lbl">سؤال تعرفه</div></div>
@@ -467,8 +468,137 @@ function plan(){const sv=S.self||{};const rated=D.topics.map((t,i)=>[t,sv['t'+i]
    <div class="card"><h3 style="font-size:18px;margin-bottom:8px">خطة الأيام السبعة</h3>${D.plan.map((p,i)=>`<label class="day" for="pd${i}"><input type="checkbox" id="pd${i}" data-pd="${i}" ${S.plan['d'+i]?'checked':''}><span><b>${p[0]}: ${esc(p[1])}</b><br><span class="muted" style="font-size:14px">${esc(p[2])}</span></span></label>`).join('<hr style="border:0;border-top:1px solid var(--line);margin:8px 0">')}</div></div></div>`;}
 function bindPlan(){document.querySelectorAll('[data-sv]').forEach(b=>b.addEventListener('click',()=>{const [i,n]=b.dataset.sv.split('|');S.self['t'+i]=+n;save();document.getElementById('app').innerHTML=plan();bindPlan();}));
   document.querySelectorAll('[data-pd]').forEach(c=>c.addEventListener('change',()=>{S.plan['d'+c.dataset.pd]=c.checked;save();}));}
+/* ---------- المحاور: أسئلة المتابعة ---------- */
+const FU={},PEND={};
+function fuPrompt(q,ctx,mine){return `أنت محاور تقني خبير في وظائف MEP في السعودية، وهذه مقابلة جارية.
+السؤال الأصلي: ${q.q}
+الإجابة النموذجية: ${plain(q)}
+المرجع: ${q.r.join(' | ')}
+ما دار حتى الآن:
+${ctx.chain.map(x=>`س: ${x.q}\nج: ${x.a}`).join('\n')}
+ثم سأل المحاور سؤال متابعة: ${ctx.fq}
+إجابة المرشح عليه: ${mine}
+قيّم إجابة سؤال المتابعة فقط: الدقة الفنية والمنطق العملي والصدق. لا تكافئ الإطالة، واذكر أي رقم أو مبدأ خاطئ.
+أعد JSON فقط بالعربية: {"score":رقم من 0 إلى 10,"verdict":"جملة واحدة","good":["..."],"missing":["..."],"better":"صياغة أقوى في جملتين","followup":"سؤال متابعة أعمق يسأله محاور حقيقي، أو نص فارغ إذا اكتفى"}`;}
+function fuButton(key,qid,mine,fq){const ctx=FU[key];const depth=ctx?ctx.depth:0;if(!fq||depth>=2||!SAMPLE)return '';
+  const q=byId[qid];PEND[key]={qid,fq,chain:(ctx?ctx.chain.concat([{q:ctx.fq,a:mine}]):[{q:q.q,a:mine}])};
+  return `<div class="row" style="margin-top:8px"><button class="btn sm pri" data-fu="${key}">جاوب سؤال المتابعة</button><span class="hint">المحاور يكمل بسؤال على إجابتك</span></div>`;}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-fu]');if(!b)return;const key=b.dataset.fu,p=PEND[key];if(!p)return;
+  const ck=key+'f';FU[ck]={qid:p.qid,chain:p.chain,fq:p.fq,depth:(FU[key]?FU[key].depth:0)+1};
+  const host=document.createElement('div');host.className='fu-box';
+  host.innerHTML=`<div class="callout" style="margin-top:10px"><b>المحاور:</b> ${esc(p.fq)}</div>${evalBox(byId[p.qid],ck)}`;
+  b.closest('.row').replaceWith(host);const t=document.getElementById('ta-'+ck);if(t)t.focus();});
+
+/* ---------- تدريب الحسابات ---------- */
+const rnd=(a,b,s=1)=>Math.round((a+Math.random()*(b-a))/s)*s;
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const nf=(x,d=1)=>Number(x.toFixed(d)).toLocaleString('en-US');
+const CALCS=[
+ {d:'hvac',t:'تدفق المياه المبردة',g(){const tr=rnd(20,400,5),dt=pick([10,12,14]),a=24*tr/dt;return{q:`ملف تبريد سعته ${tr} TR وفرق حرارة المياه ΔT = ${dt}°F. ما تدفق المياه المطلوب؟`,u:'GPM',a,s:`GPM = 24 × TR ÷ ΔT = 24 × ${tr} ÷ ${dt} = ${nf(a)} GPM`,r:'قاعدة 24 × TR ÷ ΔT (ASHRAE Fundamentals)'};}},
+ {d:'hvac',t:'هواء الحمل المحسوس',g(){const qs=rnd(12000,150000,1000),dt=rnd(18,22),a=qs/(1.08*dt);return{q:`حمل محسوس ${qs.toLocaleString('en-US')} BTU/h وفرق حرارة الهواء ${dt}°F. ما كمية الهواء؟`,u:'CFM',a,s:`CFM = Qs ÷ (1.08 × ΔT) = ${qs} ÷ (1.08 × ${dt}) = ${nf(a,0)} CFM`,r:'معادلة الحمل المحسوس 1.08 (ASHRAE Psychrometrics)'};}},
+ {d:'hvac',t:'سرعة الهواء في الدكت',g(){const cfm=rnd(800,8000,100),w=pick([16,20,24,30,36,40]),h=pick([10,12,14,16,18]),A=w*h/144,a=cfm/A;return{q:`دكت مقاسه ${w}×${h} بوصة يمر به ${cfm} CFM. ما سرعة الهواء؟`,u:'fpm',a,s:`المساحة = ${w}×${h} ÷ 144 = ${nf(A,2)} ft²\nالسرعة = ${cfm} ÷ ${nf(A,2)} = ${nf(a,0)} fpm`,r:'V = Q ÷ A (ASHRAE Duct Design)'};}},
+ {d:'hvac',t:'السعة بالطن',g(){const q=rnd(36000,720000,6000),a=q/12000;return{q:`حمل تبريد كلي ${q.toLocaleString('en-US')} BTU/h. كم طناً تبريدياً؟`,u:'TR',a,s:`TR = ${q} ÷ 12,000 = ${nf(a,1)} TR`,r:'1 TR = 12,000 BTU/h'};}},
+ {d:'hvac',t:'قدرة المضخة',g(){const gpm=rnd(100,1500,10),h=rnd(40,150,5),eta=pick([0.65,0.7,0.75,0.8]),a=gpm*h/(3960*eta);return{q:`مضخة ${gpm} GPM بضاغط ${h} ft وكفاءة ${eta*100}%. ما القدرة على العمود؟`,u:'BHP',a,s:`BHP = GPM × H ÷ (3960 × η) = ${gpm} × ${h} ÷ (3960 × ${eta}) = ${nf(a,1)} BHP`,r:'معادلة قدرة المضخة (Hydraulic Institute)'};}},
+ {d:'hvac',t:'قوانين التشابه',g(){const p1=rnd(5,45,0.5),n1=1750,n2=pick([1450,1500,1550,1600]),a=p1*Math.pow(n2/n1,3);return{q:`مضخة تستهلك ${p1} kW عند ${n1} rpm. خُفضت السرعة بالـ VFD إلى ${n2} rpm. ما القدرة الجديدة؟`,u:'kW',a,s:`P2 = P1 × (N2/N1)³ = ${p1} × (${n2}/${n1})³ = ${nf(a,2)} kW`,r:'Affinity Laws: P ∝ N³'};}},
+ {d:'hvac',t:'الهواء النقي للمكاتب',g(){const p=rnd(10,80),az=rnd(1000,8000,100),a=5*p+0.06*az;return{q:`مكتب مساحته ${az} ft² وفيه ${p} شخصاً. ما الهواء النقي في منطقة التنفس حسب ASHRAE 62.1؟`,u:'CFM',a,s:`Vbz = Rp×Pz + Ra×Az = 5×${p} + 0.06×${az} = ${nf(a,0)} CFM`,r:'ASHRAE 62.1 – Table 6-1 (Office)'};}},
+ {d:'fire',t:'تدفق الرشاش',g(){const k=pick([5.6,8.0,11.2]),p=rnd(7,50),a=k*Math.sqrt(p);return{q:`رشاش معامله K = ${k} يعمل عند ضغط ${p} psi. ما تدفقه؟`,u:'gpm',a,s:`Q = K × √P = ${k} × √${p} = ${nf(a,1)} gpm`,r:'NFPA 13 – Q = K√P'};}},
+ {d:'fire',t:'ضغط الرشاش المطلوب',g(){const k=pick([5.6,8.0]),q=rnd(18,45),a=Math.pow(q/k,2);return{q:`رشاش K = ${k} مطلوب منه ${q} gpm. ما الضغط اللازم عنده؟`,u:'psi',a,s:`P = (Q ÷ K)² = (${q} ÷ ${k})² = ${nf(a,1)} psi${a<7?'\nأقل من 7 psi: يُستخدم 7 psi كحد أدنى في الحساب':''}`,r:'NFPA 13 – Q = K√P، وأقل ضغط 7 psi'};}},
+ {d:'fire',t:'تدفق فوهة الـ Pitot',g(){const d=pick([1.5,1.75,2.5]),c=0.9,p=rnd(8,40),a=29.83*c*d*d*Math.sqrt(p);return{q:`فوهة قطرها ${d} بوصة ومعاملها c = ${c}، وقراءة الـ Pitot ${p} psi. ما التدفق؟`,u:'gpm',a,s:`Q = 29.83 × c × d² × √P = 29.83 × ${c} × ${d}² × √${p} = ${nf(a,0)} gpm`,r:'NFPA 291 – قياس التدفق بالـ Pitot'};}},
+ {d:'fire',t:'طلب منطقة التصميم',g(){const den=pick([0.10,0.15,0.20]),ar=pick([1500,2000,2500]),a=den*ar;return{q:`كثافة التصميم ${den} gpm/ft² على مساحة ${ar} ft². ما تدفق الرشاشات (بدون الخراطيم)؟`,u:'gpm',a,s:`Q = الكثافة × المساحة = ${den} × ${ar} = ${nf(a,0)} gpm`,r:'NFPA 13 – Density/Area (الفصل 19)'};}},
+ {d:'fire',t:'تغطية الرشاش',g(){const s=pick([3.0,3.5,4.0,4.5]),l=pick([3.0,3.5,4.0,4.6]),a=s*l*10.764;return{q:`رشاشان متجاوران بمسافة ${s} م على الخط و${l} م بين الخطوط. ما مساحة تغطية الرشاش بالقدم المربع؟ (Light Hazard حدها 225 ft²)`,u:'ft²',a,s:`المساحة = S × L = ${s} × ${l} = ${nf(s*l,2)} م² = ${nf(a,0)} ft² ← ${a<=225?'مقبولة':'تتجاوز 225 ft² فهي غير مقبولة'}`,r:'NFPA 13 – Table 10.2.4.2.1(a)'};}},
+ {d:'plumb',t:'الضغط الاستاتيكي من الارتفاع',g(){const h=rnd(10,120),a=h/10.2;return{q:`فرق منسوب ${h} م بين الخزان العلوي وأدنى جهاز. ما الضغط الاستاتيكي تقريباً؟`,u:'bar',a,s:`P = h ÷ 10.2 = ${h} ÷ 10.2 = ${nf(a,2)} bar${a>5.5?'\nأعلى من 80 psi (5.5 bar): يلزم PRV أو تقسيم مناطق':''}`,r:'1 bar ≈ 10.2 م ماء، وSBC 701 البند 604.8'};}},
+ {d:'plumb',t:'الضغط بالـ psi',g(){const ft=rnd(30,300,5),a=ft*0.433;return{q:`عمود ماء ارتفاعه ${ft} ft. ما ضغطه بالـ psi؟`,u:'psi',a,s:`P = 0.433 × h = 0.433 × ${ft} = ${nf(a,1)} psi`,r:'1 ft ماء = 0.433 psi'};}},
+ {d:'plumb',t:'انخفاض ماسورة الصرف',g(){const L=rnd(4,25),sl=pick([1,2]),a=L*sl*10;return{q:`ماسورة صرف أفقية طولها ${L} م بميل ${sl}%. كم تنخفض نهايتها عن بدايتها؟`,u:'مم',a,s:`الانخفاض = الطول × الميل = ${L} م × ${sl}% = ${nf(a,0)} مم`,r:'SBC 701 / IPC – Table 704.1'};}},
+];
+const CC={d:'all',cur:null,res:null};
+function newCalc(){const pool=CALCS.filter(c=>CC.d==='all'||c.d===CC.d);const c=pick(pool);CC.cur=Object.assign({t:c.t,d:c.d},c.g());CC.res=null;}
+function calc(){if(!CC.cur)newCalc();const c=CC.cur,col_=col(c.d==='plumb'?'plumb':c.d);S.calc=S.calc||{n:0,ok:0,st:0,best:0};const k=S.calc;
+  return `<div class="sec-h"><h2>تدريب الحسابات</h2><span>أرقام جديدة في كل مرة، والتصحيح بهامش ±٣٪</span></div>
+  <div class="row" style="margin-bottom:14px">${[['all','الكل'],['hvac','التكييف'],['fire','مكافحة الحريق'],['plumb','السباكة']].map(([d,t])=>`<button class="chip" data-cd="${d}" aria-pressed="${CC.d===d}">${d!=='all'?`<span class="dot" style="background:${col(d)}"></span>`:''}${t}</button>`).join('')}</div>
+  <div class="grid g4" style="margin-bottom:14px"><div class="card tile"><div class="big">${ar(k.n)}</div><div class="lbl">مسألة حللتها</div></div><div class="card tile"><div class="big" style="color:var(--good)">${ar(k.n?Math.round(100*k.ok/k.n):0)}٪</div><div class="lbl">نسبة الصح</div></div><div class="card tile"><div class="big">${ar(k.st)}</div><div class="lbl">صح متتالي الآن</div></div><div class="card tile"><div class="big">${ar(k.best)}</div><div class="lbl">أفضل سلسلة</div></div></div>
+  <div class="card" style="border-top:5px solid ${col_}"><span class="chip"><span class="dot" style="background:${col_}"></span>${esc(c.t)}</span>
+   <div style="font-family:var(--display);font-size:22px;color:var(--ink);margin:12px 0">${esc(c.q)}</div>
+   <div class="row"><label for="cin" class="sr">إجابتك</label><input id="cin" type="number" inputmode="decimal" step="any" placeholder="إجابتك" style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:200px;background:var(--card);direction:ltr;text-align:left" ${CC.res?'disabled':''} value="${CC.res?esc(CC.res.v):''}"><b>${esc(c.u)}</b>
+   ${CC.res?'':'<button class="btn acc" id="ccheck">تحقق</button><button class="btn" id="cshow">اعرض الحل</button>'}</div>
+   ${CC.res?`<div class="verdict" style="margin-top:12px"><b style="color:${CC.res.ok?'var(--good)':'var(--bad)'}">${CC.res.ok?'صحيح':CC.res.shown?'الحل':'غير صحيح'}</b> · الإجابة: <b>${nf(c.a,c.a<10?2:c.a<100?1:0)} ${esc(c.u)}</b><pre style="white-space:pre-wrap;font-family:var(--body);margin:8px 0 0;direction:ltr;text-align:left">${esc(c.s)}</pre><div class="hint" style="margin-top:6px">المرجع: ${esc(c.r)}</div></div>
+   <div class="row" style="margin-top:12px"><button class="btn pri" id="cnext">مسألة جديدة</button></div>`:''}</div>`;}
+function bindCalc(){const re=()=>{document.getElementById('app').innerHTML=calc();bindCalc();};
+  document.querySelectorAll('[data-cd]').forEach(b=>b.addEventListener('click',()=>{CC.d=b.dataset.cd;newCalc();re();}));
+  const inp=document.getElementById('cin'),ch=document.getElementById('ccheck'),sh=document.getElementById('cshow'),nx=document.getElementById('cnext');
+  const check=()=>{const v=parseFloat(inp.value);if(isNaN(v)){inp.focus();return;}const a=CC.cur.a,ok=Math.abs(v-a)<=Math.max(0.03*Math.abs(a),0.05);const k=S.calc;k.n++;if(ok){k.ok++;k.st++;k.best=Math.max(k.best,k.st);}else k.st=0;save();CC.res={ok,v};re();};
+  if(ch)ch.addEventListener('click',check);if(inp&&!CC.res)inp.addEventListener('keydown',e=>{if(e.key==='Enter')check();});
+  if(sh)sh.addEventListener('click',()=>{S.calc.st=0;save();CC.res={ok:false,shown:true,v:inp.value};re();});
+  if(nx)nx.addEventListener('click',()=>{newCalc();re();});if(inp&&!CC.res)inp.focus();}
+
+/* ---------- اكتشف الخطأ ---------- */
+const PX=50,OX=100,OY=40;const m2=(x,y)=>[OX+x*PX,OY+y*PX];
+function grid(w,h){let s='';for(let i=0;i<=w;i++){const[x]=m2(i,0);s+=`<line x1="${x}" y1="${OY}" x2="${x}" y2="${OY+h*PX}" class="gl"/>`;}for(let j=0;j<=h;j++){const[,y]=m2(0,j);s+=`<line x1="${OX}" y1="${y}" x2="${OX+w*PX}" y2="${y}" class="gl"/>`;}return s;}
+const spr=(x,y)=>{const[a,b]=m2(x,y);return `<circle cx="${a}" cy="${b}" r="9" class="spr"/><path d="M${a-6} ${b}h12M${a} ${b-6}v12" class="sprx"/>`;};
+const valve=(x,y,lbl,below)=>`<g><path d="M${x-12} ${y-9}L${x+12} ${y+9}V${y-9}L${x-12} ${y+9}Z" class="vlv"/><text x="${x}" y="${below?y+30:y-16}" class="lb" text-anchor="middle">${lbl}</text></g>`;
+const SPOT=[
+ {t:'مخطط رشاشات مكتب (Light Hazard)',d:'الغرفة ١٢×٨ م، والشبكة الخفيفة كل ١ م. يمر دكت عرضه ١٫٤ م أسفل السقف. ابحث عن ٣ أخطاء.',
+  svg:()=>{let s=grid(12,8);const[dx,dy]=m2(0,3.6);s+=`<rect x="${dx}" y="${dy}" width="${12*PX}" height="${1.4*PX}" class="duct"/><text x="${OX+6*PX}" y="${dy+0.8*PX}" class="lb" text-anchor="middle">دكت هواء عرضه 1.4 م</text>`;
+   [[2,2],[6,2],[7,2],[10,2],[2,6],[6,6],[11.2,6]].forEach(p=>s+=spr(...p));s+=`<rect x="${OX}" y="${OY}" width="${12*PX}" height="${8*PX}" class="room"/>`;return s;},
+  spots:[{x:6.5,y:2,r:1,t:'رشاشان على بعد ١ م',w:'أقل مسافة بين رشاشين ١٫٨ م (6 ft) حتى لا يبرّد أحدهما الآخر ويمنع تشغيله (Cold Soldering).',ref:'NFPA 13 – البند 10.2.5.4'},
+   {x:8.6,y:6,r:1.2,t:'مسافة ٥٫٢ م بين رشاشين',w:'أقصى مسافة بين رشاشين في Light Hazard هي ٤٫٦ م (15 ft).',ref:'NFPA 13 – Table 10.2.4.2.1(a)'},
+   {rect:[0,3.6,12,1.4],t:'لا رشاشات أسفل الدكت',w:'العائق الأعرض من ١٫٢ م (4 ft) يحتاج رشاشات أسفله لأن الماء لا يصل للمنطقة تحته.',ref:'NFPA 13 – Obstructions (الفصل 10)'}]},
+ {t:'توصيلة سحب وطرد مضخة طاردة مركزية',d:'منظر جانبي لمضخة End Suction مع خطي السحب والطرد. ابحث عن ٣ أخطاء.',
+  svg:()=>`<rect x="350" y="220" width="120" height="90" rx="10" class="eq"/><text x="410" y="272" class="lb" text-anchor="middle">مضخة</text>
+   <path d="M60 120 H320 V255 H350" class="pipe"/><text x="60" y="100" class="lb">من الخزان</text>
+   ${valve(110,120,'Check Valve',true)}
+   <path d="M180 104 L260 112 L260 128 L180 136 Z" class="fit"/><text x="220" y="165" class="lb" text-anchor="middle">مسلوب مركزي</text>
+   <text x="300" y="300" class="lb" text-anchor="middle">كوع ملاصق للمضخة</text>
+   <path d="M410 220 V60 H700" class="pipe"/>${valve(410,150,'Gate Valve')}<text x="700" y="45" class="lb" text-anchor="end">إلى الشبكة</text>`,
+  spots:[{px:[220,120],r:45,t:'مسلوب مركزي على السحب',w:'على السحب يُركب مسلوب لامركزي والجانب المستوي لأعلى، حتى لا يتجمع الهواء ويسبب تكهفاً.',ref:'Hydraulic Institute ANSI/HI 9.6.6'},
+   {px:[320,255],r:40,t:'كوع ملاصق لفتحة السحب',w:'يلزم طول مستقيم قبل فتحة السحب (عادة ٥ أضعاف القطر على الأقل) ليدخل الماء منتظماً للـ Impeller.',ref:'Hydraulic Institute ANSI/HI 9.6.6'},
+   {px:[110,120],r:40,t:'Check Valve على السحب',w:'الـ Check Valve مكانه على الطرد بعد المضخة، لأنه على السحب يزيد الفاقد ويقلل الـ NPSHa.',ref:'ممارسة هندسية + Hydraulic Institute'}]},
+ {t:'توصيلة FCU',d:'مخطط توصيل مياه مبردة لوحدة FCU مع صرف التكثيف. ابحث عن ٣ أخطاء.',
+  svg:()=>`<rect x="330" y="150" width="200" height="120" rx="10" class="eq"/><text x="430" y="215" class="lb" text-anchor="middle">FCU (الملف)</text>
+   <path d="M100 180 H330" class="pipe sup"/><text x="100" y="165" class="lb">دخول CHWS</text>${valve(170,180,'محبس عزل')}${valve(260,180,'محبس تحكم')}
+   <path d="M330 240 H100" class="pipe ret"/><text x="100" y="270" class="lb">خروج CHWR</text><rect x="235" y="228" width="40" height="24" class="fit"/><text x="255" y="285" class="lb" text-anchor="middle">مصفاة</text>${valve(170,240,'محبس اتزان',true)}
+   <rect x="330" y="270" width="200" height="16" class="pan"/><path d="M530 286 L640 250" class="pipe dr"/><text x="660" y="245" class="lb">صرف التكثيف لأعلى</text>
+   <text x="430" y="135" class="lb" text-anchor="middle">لا يوجد محبس تنفيس</text>`,
+  spots:[{px:[255,240],r:40,t:'المصفاة على الخروج',w:'المصفاة على خط الدخول قبل محبس التحكم والملف لتحميهما من الرواسب.',ref:'ASHRAE Systems & Equipment – Hydronic'},
+   {px:[430,140],r:45,t:'لا يوجد Air Vent أعلى الملف',w:'يلزم محبس تنفيس هواء في أعلى نقطة بالملف، وإلا يقل التدفق والسعة.',ref:'ممارسة هندسية + تعليمات المصنع'},
+   {px:[590,265],r:55,t:'صرف التكثيف يصعد',w:'خط التكثيف بالجاذبية يحتاج ميلاً للأسفل (حوالي ١٪) مع Trap، وإلا يفيض الحوض.',ref:'ASHRAE 62.1 – البند 5.11 Drain Pans'}]},
+ {t:'فرع صرف حمامات في مبنى',d:'قطاع لفرع صرف مراحيض قطره ٤ بوصة يتصل بالعمود الرأسي، مع لوحة كهرباء أسفله. ابحث عن ٣ أخطاء.',
+  svg:()=>`<path d="M620 60 V400" class="pipe ret"/><text x="640" y="70" class="lb">عمود الصرف</text>
+   <path d="M160 150 L620 165" class="pipe ret"/><text x="380" y="140" class="lb" text-anchor="middle">4" ميل 0.5%</text>
+   <rect x="180" y="100" width="40" height="40" class="eq"/><rect x="300" y="104" width="40" height="40" class="eq"/><text x="200" y="92" class="lb" text-anchor="middle">WC</text><text x="320" y="96" class="lb" text-anchor="middle">WC</text>
+   <path d="M120 300 H560" class="pipe sup"/><text x="130" y="290" class="lb">ماسورة مياه</text><rect x="300" y="315" width="120" height="70" class="elec"/><text x="360" y="355" class="lb" text-anchor="middle">لوحة كهرباء</text>
+   <path d="M620 400 H700" class="pipe ret"/><text x="660" y="425" class="lb" text-anchor="middle">قاعدة العمود</text>`,
+  spots:[{px:[380,155],r:55,t:'ميل 0.5% لماسورة 4"',w:'أقل ميل لماسورة صرف أفقية 4" هو ١٪ (1/8 بوصة لكل قدم).',ref:'SBC 701 / IPC – Table 704.1'},
+   {px:[360,305],r:60,t:'ماسورة مياه فوق لوحة الكهرباء',w:'لا تمر مواسير المياه أو الصرف فوق لوحات وغرف الكهرباء؛ يُعدّل المسار أو تُعمل حماية حسب المواصفات.',ref:'NFPA 70 المادة 110.26 (المساحة المخصصة للوحة)'},
+   {px:[640,400],r:45,t:'لا يوجد Cleanout عند قاعدة العمود',w:'يلزم فتحة تنظيف عند قاعدة كل عمود صرف وعند تغيير الاتجاه.',ref:'SBC 701 / IPC – البند 708'}]},
+];
+const SP={i:0,found:{},miss:0,shown:false};
+function spotXY(s){if(s.px)return s.px;const[a,b]=m2(s.x,s.y);return[a,b];}
+function spotSvg(sc){let o='';sc.spots.forEach((s,i)=>{if(!SP.found[i]&&!SP.shown)return;const ok=SP.found[i];
+  if(s.rect){const[a,b]=m2(s.rect[0],s.rect[1]);o+=`<rect x="${a}" y="${b}" width="${s.rect[2]*PX}" height="${s.rect[3]*PX}" class="${ok?'hit':'rev'}"/>`;}
+  else{const[a,b]=spotXY(s),r=s.px?s.r:s.r*PX;o+=`<circle cx="${a}" cy="${b}" r="${r}" class="${ok?'hit':'rev'}"/><text x="${a}" y="${b+5}" class="num2" text-anchor="middle">${ar(i+1)}</text>`;}});return o;}
+function spot(){const sc=SPOT[SP.i],nF=Object.keys(SP.found).length;
+  return `<div class="sec-h"><h2>اكتشف الخطأ</h2><span>المخطط ${ar(SP.i+1)} من ${ar(SPOT.length)}: اضغط مكان كل خطأ</span></div>
+  <div class="card"><div class="row"><h3 style="font-size:19px">${esc(sc.t)}</h3><span class="sp"></span><span class="pill k">وجدت ${ar(nF)} من ${ar(sc.spots.length)}</span>${SP.miss?`<span class="pill r">ضغطات خاطئة ${ar(SP.miss)}</span>`:''}</div>
+   <p class="muted" style="margin:6px 0 10px">${esc(sc.d)}</p>
+   <div style="overflow-x:auto"><svg id="spsvg" viewBox="0 0 800 460" style="width:100%;min-width:560px;background:var(--soft);border-radius:12px;cursor:crosshair" role="img" aria-label="${esc(sc.t)}">${sc.svg()}${spotSvg(sc)}<g id="missg"></g></svg></div>
+   <div class="row" style="margin-top:12px">${nF<sc.spots.length&&!SP.shown?'<button class="btn" id="spshow">اكشف الأخطاء</button>':''}<button class="btn pri" id="spnext">المخطط التالي</button></div>
+   <div style="margin-top:12px">${sc.spots.map((s,i)=>SP.found[i]||SP.shown?`<div class="callout" style="margin-bottom:8px"><b>${ar(i+1)}. ${esc(s.t)}</b><div>${esc(s.w)}</div><div class="hint">المرجع: ${esc(s.ref)}</div></div>`:'').join('')}</div></div>
+  <style>#spsvg .gl{stroke:var(--line);stroke-width:1}#spsvg .room{fill:none;stroke:var(--ink);stroke-width:3}#spsvg .duct{fill:color-mix(in srgb,var(--hvac) 18%,transparent);stroke:var(--hvac);stroke-dasharray:6 4}
+  #spsvg .spr{fill:var(--card);stroke:var(--fire);stroke-width:2.5}#spsvg .sprx{stroke:var(--fire);stroke-width:2}#spsvg .lb{fill:var(--text);font:600 15px var(--body)}
+  #spsvg .pipe{fill:none;stroke:var(--ink);stroke-width:8;stroke-linecap:round}#spsvg .sup{stroke:var(--hvac)}#spsvg .ret{stroke:var(--office)}#spsvg .dr{stroke:var(--plumb);stroke-width:5}
+  #spsvg .eq{fill:var(--card);stroke:var(--ink);stroke-width:2.5}#spsvg .fit{fill:var(--soft);stroke:var(--ink);stroke-width:2}#spsvg .vlv{fill:var(--card);stroke:var(--ink);stroke-width:2}
+  #spsvg .pan{fill:color-mix(in srgb,var(--plumb) 25%,transparent);stroke:var(--plumb)}#spsvg .elec{fill:color-mix(in srgb,var(--accent) 22%,transparent);stroke:var(--accent);stroke-width:2}
+  #spsvg .hit{fill:color-mix(in srgb,var(--good) 18%,transparent);stroke:var(--good);stroke-width:3}#spsvg .rev{fill:color-mix(in srgb,var(--warn) 15%,transparent);stroke:var(--warn);stroke-width:3;stroke-dasharray:6 4}
+  #spsvg .num2{fill:var(--ink);font:700 16px var(--display)}#spsvg .x{stroke:var(--bad);stroke-width:3}</style>`;}
+function bindSpot(){const re=()=>{document.getElementById('app').innerHTML=spot();bindSpot();};const svg=document.getElementById('spsvg'),sc=SPOT[SP.i];
+  svg.addEventListener('click',e=>{if(SP.shown)return;const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const p=pt.matrixTransform(svg.getScreenCTM().inverse());
+    let hit=-1;sc.spots.forEach((s,i)=>{if(s.rect){const[a,b]=m2(s.rect[0],s.rect[1]);if(p.x>=a&&p.x<=a+s.rect[2]*PX&&p.y>=b-10&&p.y<=b+s.rect[3]*PX+10)hit=i;}else{const[a,b]=spotXY(s),r=(s.px?s.r:s.r*PX)+12;if(Math.hypot(p.x-a,p.y-b)<=r)hit=i;}});
+    if(hit>=0&&!SP.found[hit]){SP.found[hit]=1;re();}else if(hit<0){SP.miss++;const g=document.getElementById('missg');g.innerHTML+=`<path d="M${p.x-8} ${p.y-8}l16 16M${p.x+8} ${p.y-8}l-16 16" class="x"/>`;const pl=document.querySelector('.pill.r');if(pl)pl.textContent='ضغطات خاطئة '+ar(SP.miss);else re();}});
+  const sh=document.getElementById('spshow');if(sh)sh.addEventListener('click',()=>{SP.shown=true;re();});
+  document.getElementById('spnext').addEventListener('click',()=>{S.spot=S.spot||{};S.spot[SP.i]=Math.max(S.spot[SP.i]||0,Object.keys(SP.found).length);save();SP.i=(SP.i+1)%SPOT.length;SP.found={};SP.miss=0;SP.shown=false;re();});}
+
 /* ---------- التوجيه ---------- */
-const VIEWS={home:[home,()=>{}],bank:[bank,bindBank],flash:[flash,bindFlash],quiz:[quiz,bindQuiz],mock:[mock,bindMock],office:[office,bindOffice],codes:[codes,()=>{}],plan:[plan,bindPlan]};
+const VIEWS={home:[home,()=>{}],bank:[bank,bindBank],flash:[flash,bindFlash],quiz:[quiz,bindQuiz],calc:[calc,bindCalc],spot:[spot,bindSpot],mock:[mock,bindMock],office:[office,bindOffice],codes:[codes,()=>{}],plan:[plan,bindPlan]};
 function route(){const k=(location.hash||'#home').slice(1);const v=VIEWS[k]||VIEWS.home;const key=VIEWS[k]?k:'home';
   document.querySelectorAll('#tabs a').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')==='#'+key?'page':'false'));
   const app=document.getElementById('app');const fresh=app.cloneNode(false);app.replaceWith(fresh);fresh.innerHTML=v[0]();v[1]();if(window._markSec)window._markSec();}
