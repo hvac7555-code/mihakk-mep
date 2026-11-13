@@ -1,0 +1,7 @@
+const CACHE='mihakk-v2';
+const FILES=["./", "index.html", "data.js", "manifest.webmanifest", "icons/maskable-512.png", "icons/icon-32.png", "icons/icon-180.png", "icons/icon-192.png", "icons/icon-512.png", "img/01_refrigeration_cycle.png", "img/02_fcu_hookup.png", "img/03_chiller_hookup.png", "img/04_primary_secondary.png", "img/05_direct_reverse_return.png", "img/06_pumps_series_parallel.png", "img/07_sprinkler_spacing.png", "img/08_zone_control_valve.png", "img/09_fire_pump_room.png", "img/10_trap_vent.png", "img/11_pump_reducers.png", "img/p_ahu.jpg", "img/p_chiller.jpg", "img/p_fdc.jpg", "img/p_fire_pump.jpg", "img/p_sprinkler.jpg"];
+self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()));});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==CACHE).map(x=>caches.delete(x)))).then(()=>self.clients.claim()));});
+self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(e.request.method!=='GET')return;
+  if(u.origin===location.origin){e.respondWith(fetch(e.request).then(r=>{const c=r.clone();caches.open(CACHE).then(x=>x.put(e.request,c));return r;}).catch(()=>caches.match(e.request,{ignoreSearch:true}).then(r=>r||caches.match('index.html'))));return;}
+  if(/fonts\.(googleapis|gstatic)\.com$/.test(u.hostname)){e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(n=>{const c=n.clone();caches.open(CACHE).then(x=>x.put(e.request,c));return n;})));}});

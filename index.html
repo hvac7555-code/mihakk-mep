@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مِحَكّ MEP</title>
+<meta name="theme-color" content="#0E2238">
+<meta name="description" content="منصة الجاهزية لمقابلات MEP: بنك أسئلة، بطاقات، اختبارات ومقابلة تجريبية">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="مِحَكّ MEP">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* محك: منصة تدريب — حبر كحلي، ورق رمادي بارد، كهرماني للعلامة، وألوان التخصصات للترميز */
+  --ink:#0E2238; --paper:#F3F5F8; --card:#FFFFFF; --line:#DCE3EB; --muted:#5D6B7A; --accent:#D96F17;
+  --text:#18222E; --soft:#E9EEF4;
+  --hvac:#1565C0; --fire:#C62828; --plumb:#00897B; --code:#2E7D32; --office:#455A64; --beh:#5B4B8A;
+  --good:#2E7D32; --warn:#B26A00; --bad:#C62828;
+  --display:"Readex Pro","Dubai","Tahoma",sans-serif; --body:"IBM Plex Sans Arabic","Dubai","Tahoma",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#DCE6F2; --paper:#0F1620; --card:#17212D; --line:#2A3746; --muted:#97A6B6; --accent:#F0913E; --text:#E6EDF5; --soft:#1F2B39;
+  --hvac:#5AA2F0; --fire:#EF6B6B; --plumb:#3CC2B0; --code:#5CC066; --office:#9AAFC0; --beh:#A894E0; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --ink:#DCE6F2; --paper:#0F1620; --card:#17212D; --line:#2A3746; --muted:#97A6B6; --accent:#F0913E; --text:#E6EDF5; --soft:#1F2B39;
+  --hvac:#5AA2F0; --fire:#EF6B6B; --plumb:#3CC2B0; --code:#5CC066; --office:#9AAFC0; --beh:#A894E0; color-scheme:dark;}
+*{box-sizing:border-box}
+html,body{margin:0;overflow-x:hidden}
+body{background:var(--paper);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.75}
+h1,h2,h3{font-family:var(--display);color:var(--ink);text-wrap:balance;margin:0;line-height:1.35}
+button,select,input,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 18px}
+header.top{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.topin{display:flex;align-items:center;gap:12px;padding:10px 0;flex-wrap:nowrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.mark{width:40px;height:40px;border-radius:10px;display:block}
+.mark span{font-family:var(--display);color:var(--paper);font-weight:700;font-size:20px;line-height:1}
+.brand b{font-family:var(--display);font-size:21px}
+.brand small{display:block;color:var(--muted);font-size:12px;line-height:1.2}
+.menu-btn{display:none;border:1px solid var(--line);background:var(--card);border-radius:10px;width:42px;height:42px;place-items:center;color:var(--ink)}
+.side{position:fixed;top:61px;right:0;bottom:0;width:264px;background:var(--card);border-inline-start:1px solid var(--line);overflow-y:auto;padding:14px 12px 120px;z-index:30}
+.side nav.tabs{display:flex;flex-direction:column;gap:2px}
+.side nav.tabs a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;text-decoration:none;color:var(--muted);font-weight:600;font-size:15px}
+.side nav.tabs a:hover{background:var(--soft);color:var(--ink)}
+.side nav.tabs a[aria-current="page"]{background:var(--ink);color:var(--paper)}
+.side-h{margin:18px 12px 6px;font-size:13px;font-weight:700;color:var(--muted)}
+.secl{display:flex;align-items:center;gap:8px;width:100%;text-align:right;border:0;background:none;padding:7px 12px;border-radius:8px;font-size:14px;color:var(--text);line-height:1.5}
+.secl:hover{background:var(--soft)}
+.secl em{margin-inline-start:auto;font-style:normal;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.secl[aria-current="true"]{background:var(--soft);font-weight:700}
+.shell{margin-right:264px}
+.backdrop{display:none}
+.topin{padding-inline:18px}
+@media (max-width:1000px){
+ .menu-btn{display:grid}
+ .side{top:0;width:min(86vw,320px);transform:translateX(100%);visibility:hidden;transition:transform .22s ease,visibility .22s;box-shadow:-8px 0 24px rgba(0,0,0,.18);padding-top:18px}
+ .side.open{transform:none;visibility:visible}
+ .backdrop{position:fixed;inset:0;background:rgba(10,18,30,.45);z-index:25}
+ .backdrop.show{display:block}
+ .shell{margin-right:0}
+ .sync{display:none}
+ .brand small{display:none}
+}
+main{padding-bottom:140px!important}
+.sync{font-size:12px;color:var(--muted);white-space:nowrap}
+main{padding:22px 0 60px}
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:860px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3,.g2{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.tile .big{font-family:var(--display);font-size:34px;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1.2}
+.tile .lbl{color:var(--muted);font-size:14px}
+.hero{display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
+.hero p{margin:6px 0 0;color:var(--muted);max-width:62ch}
+.btn{border:1px solid var(--line);background:var(--card);padding:9px 16px;border-radius:10px;font-weight:600}
+.btn:hover{border-color:var(--muted)}
+a.btn{text-decoration:none;color:var(--ink);display:inline-block}
+a.btn.pri{color:var(--paper)}
+.btn.pri{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn.acc{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.sm{padding:5px 11px;font-size:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sp{flex:1}
+.sec-h{display:flex;align-items:baseline;gap:10px;margin:26px 0 12px}
+.sec-h h2{font-size:22px}
+.sec-h span{color:var(--muted);font-size:14px}
+.bar{height:8px;background:var(--soft);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px}
+.disc-row{display:grid;grid-template-columns:150px 1fr 80px;gap:12px;align-items:center;padding:7px 0}
+.disc-row b{font-weight:600}.disc-row em{font-style:normal;color:var(--muted);font-size:14px;text-align:left;font-variant-numeric:tabular-nums}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);border-radius:99px;padding:5px 12px;font-size:14px;font-weight:600}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.controls input[type=search],.controls select{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px}
+.controls input[type=search]{flex:1;min-width:220px}
+.qitem{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.qhead{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;width:100%;text-align:right;background:none;border:0}
+.num{flex:none;min-width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;font-family:var(--display)}
+.qtext{flex:1;font-weight:600;font-size:17px;color:var(--ink)}
+.meta{display:block;color:var(--muted);font-size:13px;font-weight:500;margin-top:2px}
+.pill{font-size:12px;padding:2px 9px;border-radius:99px;font-weight:700;white-space:nowrap}
+.pill.k{background:color-mix(in srgb,var(--good) 15%,transparent);color:var(--good)}
+.pill.r{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
+.qbody{padding:0 16px 16px 16px;border-top:1px solid var(--line)}
+.ans{padding-top:12px;font-size:17px}
+.ans p{margin:0 0 8px}.ans ul{margin:0 0 8px;padding-inline-start:22px}.ans li{margin-bottom:4px}
+.ans .note{color:var(--muted);font-style:italic;font-size:15px}
+.ans table{border-collapse:collapse;width:100%;margin:6px 0}.ans td,.ans th{border:1px solid var(--line);padding:6px 10px}
+.ref{display:flex;gap:12px;align-items:flex-start;border-radius:12px;padding:12px 14px;margin-top:12px;border:1px solid}
+.ref .ic{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff}
+.ref b{display:block;color:var(--ink);font-size:15px}
+.ref span{font-size:15px}
+.fig{margin:12px 0 0;background:var(--soft);border-radius:12px;padding:10px;text-align:center}
+.fig img{max-width:100%;max-height:420px;border-radius:8px;background:#fff}
+.fig figcaption{font-size:14px;color:var(--muted);margin-top:6px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.btn.on-k{background:var(--good);border-color:var(--good);color:#fff}
+.btn.on-r{background:var(--warn);border-color:var(--warn);color:#fff}
+.eval{margin-top:12px;border:1px dashed var(--line);border-radius:12px;padding:12px}
+textarea{width:100%;min-height:110px;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--card);resize:vertical;line-height:1.7}
+.mic[aria-pressed="true"]{background:var(--fire);border-color:var(--fire);color:#fff}
+.verdict{margin-top:10px;background:var(--soft);border-radius:10px;padding:12px}
+.score{font-family:var(--display);font-size:26px;font-variant-numeric:tabular-nums}
+.flash{min-height:340px;display:flex;flex-direction:column;gap:12px;cursor:pointer}
+.flash .front{font-family:var(--display);font-size:24px;color:var(--ink)}
+.hint{color:var(--muted);font-size:14px}
+.opt{display:block;width:100%;text-align:right;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:12px 14px;margin-bottom:8px;font-size:17px}
+.opt.ok{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--card))}
+.opt.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--card))}
+.timer{font-family:var(--display);font-size:30px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.timer.low{color:var(--bad)}
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chain span{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-weight:600;font-size:14px}
+.chain i{color:var(--muted);font-style:normal}
+table.t{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+table.t th,table.t td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:right}
+table.t th{color:var(--muted);font-size:14px;font-weight:600}
+.tbl{overflow-x:auto}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:var(--card);padding:6px 12px;font-weight:600;border-inline-start:1px solid var(--line)}
+.seg button:first-child{border-inline-start:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.topic{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.day{display:flex;gap:12px;align-items:flex-start}
+.day input{width:22px;height:22px;margin-top:4px;accent-color:var(--good)}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:6px;padding:1px 7px;margin-inline-start:6px}
+.muted{color:var(--muted)}
+.callout{border-inline-start:4px solid var(--accent);background:var(--card);border-radius:10px;padding:12px 16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-inline-end:1px solid var(--line)}
+.more{display:block;margin:12px auto}
+
+#splash{position:fixed;inset:0;z-index:100;background:#0E2238;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#fff;transition:opacity .45s ease,visibility .45s;padding:24px;text-align:center}
+#splash.hide{opacity:0;visibility:hidden}
+#splash svg{width:min(52vw,230px);height:auto}
+#splash .arc{stroke-dasharray:420;stroke-dashoffset:420;animation:draw .7s ease forwards}
+#splash .a2{animation-delay:.25s}#splash .a3{animation-delay:.5s}
+#splash .chk{stroke-dasharray:260;stroke-dashoffset:260;animation:draw .55s cubic-bezier(.6,0,.2,1) .85s forwards}
+#splash .ring{opacity:0;animation:fade .4s ease .05s forwards}
+#splash h1{color:#fff;font-size:clamp(30px,7vw,46px);opacity:0;transform:translateY(10px);animation:rise .6s ease 1.15s forwards}
+#splash p{margin:0;color:#B9C7D8;font-size:clamp(14px,3.6vw,17px);opacity:0;animation:rise .6s ease 1.35s forwards}
+#splash .dots{display:flex;gap:10px;opacity:0;animation:fade .5s ease 1.55s forwards}
+#splash .dots span{width:10px;height:10px;border-radius:50%}
+#splash .skip{position:absolute;bottom:max(22px,env(safe-area-inset-bottom));color:#8FA6C1;font-size:13px;background:none;border:0}
+@keyframes draw{to{stroke-dashoffset:0}}@keyframes fade{to{opacity:1}}@keyframes rise{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){#splash *{animation:none!important;opacity:1!important;stroke-dashoffset:0!important;transform:none!important}}
+.install{display:none}
+.install.show{display:inline-block}
+#iosTip{position:fixed;inset:auto 12px 12px 12px;z-index:60;max-width:460px;margin:auto;display:none}
+#iosTip.show{display:block}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="splash" role="dialog" aria-label="شاشة البداية">
+  <svg viewBox="0 0 512 512" aria-hidden="true">
+    <path class="ring" d="M136 330 A132 132 0 1 1 376 330" fill="none" stroke="#24395A" stroke-width="34" stroke-linecap="round"/>
+    <path class="arc" d="M136 330 A132 132 0 0 1 166 168" fill="none" stroke="#1E88E5" stroke-width="34" stroke-linecap="round"/>
+    <path class="arc a2" d="M190 146 A132 132 0 0 1 322 146" fill="none" stroke="#00A693" stroke-width="34" stroke-linecap="round"/>
+    <path class="arc a3" d="M346 168 A132 132 0 0 1 376 330" fill="none" stroke="#E53935" stroke-width="34" stroke-linecap="round"/>
+    <path class="chk" d="M192 262 L236 306 L326 212" fill="none" stroke="#F39A3D" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <h1>مِحَكّ MEP</h1>
+  <p>اختبر جاهزيتك قبل أن يختبرك المحاور</p>
+  <div class="dots" aria-hidden="true"><span style="background:#1E88E5"></span><span style="background:#E53935"></span><span style="background:#00A693"></span><span style="background:#F39A3D"></span></div>
+  <button class="skip" id="skip">اضغط للدخول</button>
+</div>
+<header class="top"><div class="topin">
+  <button class="menu-btn" id="menuBtn" aria-label="القائمة" aria-controls="side" aria-expanded="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <a class="brand" href="#home"><img class="mark" src="icons/icon-192.png" alt="" width="40" height="40"><div><b>مِحَكّ MEP</b><small>منصة الجاهزية لمقابلات MEP</small></div></a>
+  <span class="sp"></span>
+  <button class="btn sm acc install" id="installBtn">ثبّت التطبيق</button><span class="sync" id="sync">التقدم محفوظ على هذا الجهاز</span>
+</div></header>
+<div class="backdrop" id="backdrop"></div>
+<aside class="side" id="side" aria-label="القائمة الجانبية">
+  <nav class="tabs" id="tabs"><a href="#home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg><span>الرئيسية</span></a><a href="#bank"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>بنك الأسئلة</span></a><a href="#flash"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="14" height="12" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v10"/></svg><span>البطاقات</span></a><a href="#quiz"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg><span>اختبار سريع</span></a><a href="#mock"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>مقابلة تجريبية</span></a><a href="#office"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3"/></svg><span>المكتب الفني</span></a><a href="#codes"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2z"/><path d="M22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></svg><span>الأكواد والأرقام</span></a><a href="#plan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>خطتي</span></a></nav>
+  <div class="side-h">أقسام بنك الأسئلة</div>
+  <div id="secNav"></div>
+</aside>
+<div class="shell"><main class="wrap" id="app"></main></div>
+<div class="card" id="iosTip" role="dialog" aria-label="طريقة التثبيت"><b>تثبيت على الآيفون أو الآيباد</b><p style="margin:6px 0">افتح المنصة في Safari، ثم اضغط زر المشاركة <b>⬆︎</b> واختر <b>«إضافة إلى الشاشة الرئيسية»</b>.</p><button class="btn sm" id="iosClose">تمام</button></div>
+<script>window.INSTALL_URL="https://mihakk-mep.netlify.app/";</script>
+<script src="data.js"></script>
+<script>
+(function(){
+const D=window.DATA, Q=D.Q;
+const DISC={hvac:['التكييف','--hvac'],fire:['مكافحة الحريق','--fire'],plumb:['السباكة','--plumb'],office:['المكتب الفني والتنفيذ','--office'],code:['الكود السعودي','--code'],beh:['سلوكي وعام','--beh']};
+const ORDER=['hvac','fire','plumb','office','code','beh'];
+const AR='٠١٢٣٤٥٦٧٨٩';const ar=n=>String(n).replace(/\d/g,d=>AR[d]);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const col=d=>`var(${DISC[d][1]})`;
+const byId={};Q.forEach(q=>byId[q.id]=q);
+const plain=q=>q.b.map(b=>b.r?b.r.map(r=>r[0]).join(''):'').join('\n');
+/* ---------- الحالة ---------- */
+const blank=()=>({st:{},box:{},quiz:[],mock:[],self:{},plan:{},intro:{},upd:0});
+let S=blank();
+try{const v=JSON.parse(localStorage.getItem('mihakk')||'null');if(v)S=Object.assign(blank(),v);}catch(e){}
+let dbRef=null,saveT=null;
+function save(){S.upd=Date.now();try{localStorage.setItem('mihakk',JSON.stringify(S));}catch(e){}
+  if(dbRef){clearTimeout(saveT);saveT=setTimeout(()=>{dbRef.set(JSON.parse(JSON.stringify(S))).then(()=>setSync('محفوظ في حسابك')).catch(()=>setSync('تعذّر الحفظ في الحساب، محفوظ على هذا الجهاز'));},1200);}}
+function setSync(t){document.getElementById('sync').textContent=t;}
+(async()=>{try{if(!window.claude||!claude.use)return;const db=await claude.use('db');const user=await claude.use('user');if(!db||!user)return;
+  const id=await user.id();if(!id)return;dbRef=db.collection('data/users/'+id).doc('progress');
+  const timer=setTimeout(()=>setSync('محفوظ على هذا الجهاز'),10000);
+  const r=await dbRef.get();clearTimeout(timer);
+  let v=r&&typeof r.data==='function'?r.data():(r&&r.data!==undefined?r.data:r);
+  if(v&&v.upd&&v.upd>(S.upd||0)){S=Object.assign(blank(),v);try{localStorage.setItem('mihakk',JSON.stringify(S));}catch(e){}route();}
+  else if(S.upd){dbRef.set(JSON.parse(JSON.stringify(S))).catch(()=>{});}
+  setSync('التقدم محفوظ في حسابك');}catch(e){}})();
+let SAMPLE=null,DICT=null;
+(async()=>{try{if(window.claude&&claude.use){SAMPLE=await claude.use('sample');DICT=await claude.use('dictation');route();}}catch(e){}})();
+/* ---------- أدوات العرض ---------- */
+function blocks(bl,c){let h='',inUl=false;
+  bl.forEach(b=>{if(b.k==='table'){h+=(inUl?'</ul>':'')+'<div class="tbl"><table>'+b.rows.map((r,i)=>'<tr>'+r.map(x=>i?`<td>${esc(x)}</td>`:`<th>${esc(x)}</th>`).join('')+'</tr>').join('')+'</table></div>';inUl=false;return;}
+    const t=b.r.map(r=>r[1]?`<b style="color:${c}">${esc(r[0])}</b>`:esc(r[0])).join('');
+    if(b.k==='b'){if(!inUl){h+='<ul>';inUl=true;}h+=`<li>${t}</li>`;}
+    else{if(inUl){h+='</ul>';inUl=false;}h+=`<p${b.k==='note'?' class="note"':''}>${t}</p>`;}});
+  if(inUl)h+='</ul>';return h;}
+const BOOK='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2z"/><path d="M22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></svg>';
+function refCard(r,c){const head=r[0]==='—'?r[1]:`${r[0]}  ·  ${r[1]}`;
+  return `<div class="ref" style="background:color-mix(in srgb,${c} 9%,var(--card));border-color:color-mix(in srgb,${c} 35%,transparent)"><div class="ic" style="background:${c}">${BOOK}</div><div><b><span style="color:${c}">المرجع في الكود:</span> ${esc(head)}</b><span>${esc(r[2])}</span></div></div>`;}
+function figs(q){return q.f.map(f=>`<figure class="fig"><img src="${f.src}" alt="${esc(f.cap)}" loading="lazy"><figcaption>${esc(f.cap)}${f.credit?` <span class="muted">(${esc(f.credit)})</span>`:''}</figcaption></figure>`).join('');}
+function statusPill(id){const s=S.st[id];return s==='k'?'<span class="pill k">أعرفها</span>':s==='r'?'<span class="pill r">للمراجعة</span>':'';}
+function counts(){const c={};ORDER.forEach(d=>c[d]={t:0,k:0,r:0});Q.forEach(q=>{c[q.d].t++;if(S.st[q.id]==='k')c[q.d].k++;if(S.st[q.id]==='r')c[q.d].r++;});return c;}
+/* ---------- التقييم بالذكاء الاصطناعي والإملاء ---------- */
+function evalBox(q,key){const has=!!SAMPLE;
+  return `<div class="eval" id="ev-${key}"><label for="ta-${key}" class="hint">اكتب إجابتك كما ستقولها في المقابلة${DICT?' أو اضغط الميكروفون وتكلم':''}:</label>
+  <textarea id="ta-${key}" placeholder="إجابتك..."></textarea>
+  <div class="row" style="margin-top:8px">${DICT?`<button class="btn sm mic" data-mic="${key}" aria-pressed="false">🎙️ تكلّم</button>`:''}
+  ${has?`<button class="btn sm acc" data-grade="${q.id}|${key}">قيّم إجابتي</button>`:'<span class="hint">التقييم الآلي غير متاح في هذا العرض؛ قارن بالإجابة النموذجية.</span>'}<span class="hint" id="live-${key}"></span></div>
+  <div id="vd-${key}"></div></div>`;}
+let micKey=null;
+async function toggleMic(key,btn){if(!DICT)return;
+  if(micKey){try{await DICT.stop();}catch(e){}return;}
+  micKey=key;const ta=document.getElementById('ta-'+key),live=document.getElementById('live-'+key);
+  DICT.onPartial(({text})=>{if(live)live.textContent=text;});
+  DICT.onFinal(({text})=>{const t=document.getElementById('ta-'+micKey);if(t){t.value=(t.value?t.value+' ':'')+text;}if(live)live.textContent='';});
+  DICT.onState(({state})=>{const b=document.querySelector(`[data-mic="${micKey}"]`);if(b){b.setAttribute('aria-pressed',state==='listening'?'true':'false');b.textContent=state==='listening'?'⏹ إيقاف':'🎙️ تكلّم';}if(state!=='listening')micKey=null;});
+  DICT.start().catch(e=>{micKey=null;if(live)live.textContent=e&&e.code==='not_granted'?'الميكروفون غير مسموح؛ اكتب إجابتك.':'تعذّر تشغيل الميكروفون.';});}
+async function grade(qid,key,after){const q=byId[qid],ta=document.getElementById('ta-'+key),out=document.getElementById('vd-'+key);
+  const mine=(ta.value||'').trim();if(!mine){out.innerHTML='<p class="hint">اكتب إجابتك أولاً.</p>';return;}
+  out.innerHTML='<div class="verdict">جارٍ التقييم...</div>';
+  const prompt=`أنت محاور تقني خبير في وظائف MEP (تكييف وحريق وسباكة ومكتب فني) في السعودية. قيّم إجابة المرشح على سؤال مقابلة.
+السؤال: ${q.q}
+الإجابة النموذجية: ${plain(q)}
+المرجع: ${q.r.join(' | ')}
+إجابة المرشح: ${mine}
+قيّم الدقة الفنية والاكتمال والوضوح. لا تكافئ الإطالة. إذا ذكر المرشح رقماً خاطئاً فاذكره.
+أعد JSON فقط بهذا الشكل وبالعربية: {"score":رقم من 0 إلى 10,"verdict":"جملة واحدة","good":["نقطة قوية"],"missing":["ما ينقص أو الخطأ"],"better":"صياغة أقوى مختصرة في جملتين","followup":"سؤال متابعة متوقع من المحاور"}`;
+  try{const v=await SAMPLE.json(prompt,{modelTier:'default'});
+    const sc=Math.max(0,Math.min(10,Number(v.score)||0));const c=sc>=7?'var(--good)':sc>=4?'var(--warn)':'var(--bad)';
+    out.innerHTML=`<div class="verdict"><div class="row"><span class="score" style="color:${c}">${ar(sc)}/١٠</span><b>${esc(v.verdict||'')}</b></div>
+    ${(v.good||[]).length?`<p><b>نقاط قوية:</b> ${v.good.map(esc).join('، ')}</p>`:''}
+    ${(v.missing||[]).length?`<p><b>ينقصك:</b> ${v.missing.map(esc).join('، ')}</p>`:''}
+    ${v.better?`<p><b>صياغة أقوى:</b> ${esc(v.better)}</p>`:''}
+    ${v.followup?`<p><b>سؤال المتابعة المتوقع:</b> ${esc(v.followup)}</p>`:''}</div>`;
+    if(after)after(sc);}
+  catch(e){out.innerHTML=`<div class="verdict">${e&&e.code==='not_granted'?'لم يُسمح بالتقييم الآلي. قارن إجابتك بالإجابة النموذجية.':e&&e.code==='rate_limited'?'كثرة الطلبات الآن. حاول بعد دقيقة.':'تعذّر التقييم الآن. حاول مرة أخرى.'}</div>`;}}
+document.addEventListener('click',e=>{const m=e.target.closest('[data-mic]');if(m){toggleMic(m.dataset.mic,m);return;}
+  const g=e.target.closest('[data-grade]');if(g){const [id,k]=g.dataset.grade.split('|');grade(id,k,window._afterGrade&&window._afterGrade[k]);}});
+/* ---------- الرئيسية ---------- */
+function home(){const c=counts();const tot=Q.length,known=Object.values(S.st).filter(x=>x==='k').length,rev=Object.values(S.st).filter(x=>x==='r').length;
+  const best=S.quiz.length?Math.max(...S.quiz.map(x=>Math.round(100*x.s/x.n))):null;
+  const weak=weakest();const day=D.plan.findIndex((p,i)=>!S.plan['d'+i]);
+  return `<section class="hero"><div><h1 style="font-size:32px">جاهز للمقابلة القادمة؟</h1>
+  <p>${ar(tot)} سؤالاً بإجاباتها ومرجع الكود لكل سؤال، في التكييف والحريق والسباكة والمكتب الفني. ذاكر بالبطاقات، اختبر نفسك، وجرّب مقابلة كاملة بالتوقيت${SAMPLE?' مع تقييم فوري لإجاباتك':''}.</p></div>
+  <div class="row"><a class="btn pri" href="#mock">ابدأ مقابلة تجريبية</a><a class="btn" href="#flash">راجع بالبطاقات</a></div></section>
+  <div class="grid g4">
+   <div class="card tile"><div class="big">${ar(tot)}</div><div class="lbl">سؤال في البنك</div></div>
+   <div class="card tile"><div class="big" style="color:var(--good)">${ar(known)}</div><div class="lbl">سؤال تعرفه</div></div>
+   <div class="card tile"><div class="big" style="color:var(--warn)">${ar(rev)}</div><div class="lbl">سؤال للمراجعة</div></div>
+   <div class="card tile"><div class="big">${best===null?'—':ar(best)+'٪'}</div><div class="lbl">أفضل نتيجة في الاختبار السريع</div></div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+   <div class="card"><h3 style="font-size:18px;margin-bottom:8px">تقدمك حسب التخصص</h3>
+    ${ORDER.map(d=>`<div class="disc-row"><b><span class="dot" style="background:${col(d)}"></span> ${DISC[d][0]}</b><div class="bar"><i style="width:${c[d].t?100*c[d].k/c[d].t:0}%;background:${col(d)}"></i></div><em>${ar(c[d].k)} / ${ar(c[d].t)}</em></div>`).join('')}
+   </div>
+   <div class="card"><h3 style="font-size:18px;margin-bottom:8px">التالي لك</h3>
+    <div class="callout" style="margin-bottom:10px"><b>ركّز اليوم على: ${DISC[weak][0]}</b><div class="muted" style="font-size:14px">${S.self&&Object.keys(S.self).length?'حسب تقييمك الذاتي ونسبة ما تعرفه.':'أقل تخصص في نسبة الأسئلة التي تعرفها.'}</div>
+    <div class="row" style="margin-top:8px"><a class="btn sm" href="#bank" data-go-disc="${weak}">افتح أسئلته</a><a class="btn sm" href="#flash" data-go-flash="${weak}">بطاقاته</a></div></div>
+    ${day>=0?`<div class="callout"><b>${D.plan[day][0]} من خطة الأيام السبعة: ${D.plan[day][1]}</b><div class="muted" style="font-size:14px">${D.plan[day][2]}</div><a class="btn sm" style="margin-top:8px" href="#plan">افتح الخطة</a></div>`:'<div class="callout"><b>أنهيت خطة الأيام السبعة.</b> أعد المقابلة التجريبية قبل موعدك بيوم.</div>'}
+   </div></div>
+  <div class="sec-h"><h2>نصائح الإجابة</h2></div>
+  <div class="card"><ul style="margin:0;padding-inline-start:20px">${D.tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`;}
+function weakest(){const c=counts();const map={hvac:[3,4,5],fire:[6,7],plumb:[8,9],office:[0,1,2,10],code:[11],beh:[0]};let best='hvac',bv=1e9;
+  ORDER.forEach(d=>{let v=c[d].t?c[d].k/c[d].t:1;const sv=(map[d]||[]).map(i=>S.self['t'+i]).filter(Boolean);if(sv.length)v=v*0.5+(sv.reduce((a,b)=>a+b,0)/sv.length/5)*0.5;if(d!=='beh'&&v<bv){bv=v;best=d;}});return best;}
+/* ---------- بنك الأسئلة ---------- */
+const F={d:'all',sec:'all',st:'all',q:'',lim:40,open:{}};
+function bank(){const secs=[...new Set(Q.map(q=>q.sec))];
+  return `<div class="sec-h"><h2>بنك الأسئلة</h2><span id="cnt"></span></div>
+  <div class="controls"><input type="search" id="fq" placeholder="ابحث في الأسئلة والإجابات (مثال: NPSH، 175 psi، Trap)" value="${esc(F.q)}">
+   <select id="fsec" aria-label="القسم"><option value="all">كل الأقسام</option>${secs.map(s=>`<option ${F.sec===s?'selected':''}>${esc(s)}</option>`).join('')}</select>
+   <select id="fst" aria-label="الحالة"><option value="all">كل الحالات</option><option value="new" ${F.st==='new'?'selected':''}>لم أقيّمها</option><option value="r" ${F.st==='r'?'selected':''}>للمراجعة</option><option value="k" ${F.st==='k'?'selected':''}>أعرفها</option></select></div>
+  <div class="row" style="margin-bottom:14px"><button class="chip" data-fd="all" aria-pressed="${F.d==='all'}">الكل</button>${ORDER.map(d=>`<button class="chip" data-fd="${d}" aria-pressed="${F.d===d}"><span class="dot" style="background:${col(d)}"></span>${DISC[d][0]}</button>`).join('')}</div>
+  <div id="list"></div>`;}
+function filtered(){const t=F.q.trim().toLowerCase();return Q.filter(q=>(F.d==='all'||q.d===F.d)&&(F.sec==='all'||q.sec===F.sec)&&(F.st==='all'||(F.st==='new'?!S.st[q.id]:S.st[q.id]===F.st))&&(!t||(q.q+' '+plain(q)+' '+q.r.join(' ')).toLowerCase().includes(t)));}
+function qItem(q){const c=col(q.d),open=F.open[q.id];
+  return `<article class="qitem" id="it-${q.id}"><button class="qhead" data-tog="${q.id}" aria-expanded="${!!open}"><span class="num" style="background:${c}">${esc(q.n)}</span><span class="qtext">${esc(q.q)}<span class="meta">${esc(q.sec)}${q.sub&&q.sub!==q.sec?' · '+esc(q.sub):''}</span></span>${statusPill(q.id)}</button>
+  ${open?`<div class="qbody"><div class="ans">${blocks(q.b,c)}</div>${figs(q)}${refCard(q.r,c)}
+   <div class="actions"><button class="btn sm ${S.st[q.id]==='k'?'on-k':''}" data-st="${q.id}|k">أعرفها</button><button class="btn sm ${S.st[q.id]==='r'?'on-r':''}" data-st="${q.id}|r">أراجعها لاحقاً</button><button class="btn sm" data-ev="${q.id}">جرّب الإجابة بنفسك</button></div><div id="evh-${q.id}"></div></div>`:''}</article>`;}
+function drawList(){const L=filtered();document.getElementById('cnt').textContent=ar(L.length)+' سؤالاً';
+  document.getElementById('list').innerHTML=L.slice(0,F.lim).map(qItem).join('')+(L.length>F.lim?`<button class="btn more" id="more">عرض المزيد (${ar(L.length-F.lim)})</button>`:'')+(L.length?'':'<div class="card muted">لا توجد أسئلة بهذه الشروط. غيّر البحث أو المرشحات.</div>');}
+function bindBank(){drawList();
+  document.getElementById('fq').addEventListener('input',e=>{F.q=e.target.value;F.lim=40;drawList();});
+  document.getElementById('fsec').addEventListener('change',e=>{F.sec=e.target.value;F.lim=40;drawList();if(window._markSec)window._markSec();});
+  document.getElementById('fst').addEventListener('change',e=>{F.st=e.target.value;F.lim=40;drawList();});
+  document.querySelectorAll('[data-fd]').forEach(b=>b.addEventListener('click',()=>{F.d=b.dataset.fd;F.lim=40;document.querySelectorAll('[data-fd]').forEach(x=>x.setAttribute('aria-pressed',x===b));drawList();}));
+  document.getElementById('list').addEventListener('click',e=>{const t=e.target.closest('[data-tog]');if(t){F.open[t.dataset.tog]=!F.open[t.dataset.tog];const q=byId[t.dataset.tog];document.getElementById('it-'+q.id).outerHTML=qItem(q);return;}
+    const s=e.target.closest('[data-st]');if(s){const [id,v]=s.dataset.st.split('|');S.st[id]=S.st[id]===v?undefined:v;if(!S.st[id])delete S.st[id];save();const q=byId[id];const keepEv=document.getElementById('evh-'+id).innerHTML;document.getElementById('it-'+id).outerHTML=qItem(q);document.getElementById('evh-'+id).innerHTML=keepEv;return;}
+    const v=e.target.closest('[data-ev]');if(v){const h=document.getElementById('evh-'+v.dataset.ev);h.innerHTML=h.innerHTML?'':evalBox(byId[v.dataset.ev],'b'+v.dataset.ev);return;}
+    if(e.target.id==='more'){F.lim+=40;drawList();}});}
+/* ---------- البطاقات ---------- */
+const FL={d:'all',cur:null,flip:false};
+function pickCard(){const pool=Q.filter(q=>FL.d==='all'||q.d===FL.d);const minB=Math.min(...pool.map(q=>S.box[q.id]||1));const c=pool.filter(q=>(S.box[q.id]||1)===minB&&(!FL.cur||q.id!==FL.cur.id));const arr=c.length?c:pool;FL.cur=arr[Math.floor(Math.random()*arr.length)];FL.flip=false;}
+function flash(){if(!FL.cur||(FL.d!=='all'&&FL.cur.d!==FL.d))pickCard();const q=FL.cur,c=col(q.d);
+  const pool=Q.filter(x=>FL.d==='all'||x.d===FL.d);const dist=[1,2,3,4,5].map(b=>pool.filter(x=>(S.box[x.id]||1)===b).length);
+  return `<div class="sec-h"><h2>البطاقات</h2><span>تكرار متباعد: البطاقة التي تعرفها تنتقل لصندوق أعلى وتظهر أقل</span></div>
+  <div class="row" style="margin-bottom:14px"><button class="chip" data-fl="all" aria-pressed="${FL.d==='all'}">الكل</button>${ORDER.map(d=>`<button class="chip" data-fl="${d}" aria-pressed="${FL.d===d}"><span class="dot" style="background:${col(d)}"></span>${DISC[d][0]}</button>`).join('')}</div>
+  <div class="grid g4" style="margin-bottom:14px">${[0,1,2,3].map(i=>`<div class="card tile"><div class="big">${ar(i<3?dist[i]:dist[3]+dist[4])}</div><div class="lbl">${['صندوق ١: جديد أو صعب','صندوق ٢','صندوق ٣','صندوق ٤ و٥: متمكن'][i]}</div></div>`).join('')}</div>
+  <div class="card flash" id="fcard" role="button" tabindex="0" aria-label="اقلب البطاقة" style="border-top:5px solid ${c}">
+   <div class="row"><span class="num" style="background:${c}">${esc(q.n)}</span><span class="muted">${esc(q.sec)}</span></div>
+   <div class="front">${esc(q.q)}</div>
+   ${FL.flip?`<div class="ans">${blocks(q.b,c)}</div>${figs(q)}${refCard(q.r,c)}`:'<div class="hint">جاوب في سرّك أو بصوت عالٍ، ثم اضغط على البطاقة لترى الإجابة.</div>'}
+  </div>
+  ${FL.flip?`<div class="row" style="margin-top:12px"><button class="btn" data-rate="1" style="border-color:var(--bad)">لم أعرفها</button><button class="btn" data-rate="0">جزئياً</button><button class="btn" data-rate="2" style="border-color:var(--good)">عرفتها</button></div>`:''}`;}
+function bindFlash(){const re=()=>{document.getElementById('app').innerHTML=flash();bindFlash();};
+  document.querySelectorAll('[data-fl]').forEach(b=>b.addEventListener('click',()=>{FL.d=b.dataset.fl;FL.cur=null;re();}));
+  const card=document.getElementById('fcard');const flip=()=>{if(!FL.flip){FL.flip=true;re();}};card.addEventListener('click',flip);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();flip();}});
+  document.querySelectorAll('[data-rate]').forEach(b=>b.addEventListener('click',()=>{const id=FL.cur.id,r=+b.dataset.rate,cur=S.box[id]||1;
+    S.box[id]=r===2?Math.min(5,cur+1):r===1?1:cur;if(r===2&&S.box[id]>=3)S.st[id]='k';if(r===1)S.st[id]='r';save();pickCard();re();}));}
+/* ---------- الاختبار السريع ---------- */
+const QZ={on:false,list:[],i:0,s:0,picked:null,wrong:[]};
+function quiz(){const MC=Q.filter(q=>q.mc);
+  if(!QZ.on)return `<div class="sec-h"><h2>اختبار سريع</h2><span>${ar(MC.length)} سؤال اختيار من متعدد في التكييف</span></div>
+   <div class="card"><p style="margin-top:0">اختر عدد الأسئلة. الخيارات تُخلط في كل مرة، وبعد كل إجابة ترى الشرح ومرجعه.</p>
+   <div class="row"><button class="btn pri" data-qn="10">١٠ أسئلة</button><button class="btn" data-qn="20">٢٠ سؤالاً</button><button class="btn" data-qn="${MC.length}">كل الأسئلة (${ar(MC.length)})</button></div></div>
+   ${S.quiz.length?`<div class="sec-h"><h2 style="font-size:18px">آخر محاولاتك</h2></div><div class="card tbl"><table class="t"><tr><th>التاريخ</th><th>النتيجة</th></tr>${S.quiz.slice(-6).reverse().map(x=>`<tr><td>${new Date(x.t).toLocaleDateString('ar-SA-u-ca-gregory')}</td><td>${ar(x.s)} / ${ar(x.n)} (${ar(Math.round(100*x.s/x.n))}٪)</td></tr>`).join('')}</table></div>`:''}`;
+  if(QZ.i>=QZ.list.length){const pct=Math.round(100*QZ.s/QZ.list.length);
+    return `<div class="sec-h"><h2>نتيجتك</h2></div><div class="card"><div class="score" style="font-size:44px;color:${pct>=70?'var(--good)':pct>=50?'var(--warn)':'var(--bad)'}">${ar(QZ.s)} / ${ar(QZ.list.length)}</div>
+    <p>${pct>=80?'ممتاز، أنت جاهز في هذا الجزء.':pct>=60?'جيد، راجع الأسئلة التي أخطأت فيها.':'تحتاج مراجعة؛ الأسئلة الخاطئة أُضيفت لقائمة المراجعة.'}</p>
+    <div class="row"><button class="btn pri" data-qn="${QZ.list.length}">اختبار جديد</button><a class="btn" href="#bank" data-go-st="r">افتح أسئلة المراجعة</a></div></div>
+    ${QZ.wrong.length?`<div class="sec-h"><h2 style="font-size:18px">الأسئلة التي أخطأت فيها</h2></div>`+QZ.wrong.map(id=>{const q=byId[id];return `<div class="card" style="margin-bottom:8px"><b>${esc(q.mc.stem)}</b><div class="muted">الصحيح: ${esc(q.mc.o[q.mc.a])}</div></div>`;}).join(''):''}`;}
+  const q=QZ.list[QZ.i],c=col(q.d),p=QZ.picked;
+  return `<div class="sec-h"><h2>السؤال ${ar(QZ.i+1)} من ${ar(QZ.list.length)}</h2><span>الصحيح حتى الآن: ${ar(QZ.s)}</span></div>
+   <div class="bar" style="margin-bottom:14px"><i style="width:${100*QZ.i/QZ.list.length}%;background:var(--accent)"></i></div>
+   <div class="card"><div class="front" style="font-family:var(--display);font-size:22px;color:var(--ink);margin-bottom:14px">${esc(q.mc.stem)}</div>
+   ${q._o.map(k=>`<button class="opt ${p!==null?(k===q.mc.a?'ok':(k===p?'no':'')):''}" data-op="${k}" ${p!==null?'disabled':''}>${esc(q.mc.o[k])}</button>`).join('')}
+   ${p!==null?`<div class="ans" style="margin-top:6px">${blocks(q.b,c)}</div>${refCard(q.r,c)}<div class="row" style="margin-top:12px"><button class="btn pri" id="qnext">${QZ.i+1<QZ.list.length?'السؤال التالي':'اعرض النتيجة'}</button></div>`:''}</div>`;}
+function bindQuiz(){const re=()=>{document.getElementById('app').innerHTML=quiz();bindQuiz();};
+  document.querySelectorAll('[data-qn]').forEach(b=>b.addEventListener('click',()=>{const MC=Q.filter(q=>q.mc).sort(()=>Math.random()-0.5).slice(0,+b.dataset.qn);MC.forEach(q=>q._o=q.mc.o.map((_,i)=>i).sort(()=>Math.random()-0.5));Object.assign(QZ,{on:true,list:MC,i:0,s:0,picked:null,wrong:[]});re();}));
+  document.querySelectorAll('[data-op]').forEach(b=>b.addEventListener('click',()=>{const q=QZ.list[QZ.i];QZ.picked=+b.dataset.op;if(QZ.picked===q.mc.a)QZ.s++;else{QZ.wrong.push(q.id);S.st[q.id]='r';}re();}));
+  const n=document.getElementById('qnext');if(n)n.addEventListener('click',()=>{QZ.i++;QZ.picked=null;if(QZ.i>=QZ.list.length){S.quiz.push({t:Date.now(),s:QZ.s,n:QZ.list.length});S.quiz=S.quiz.slice(-30);save();}re();});}
+/* ---------- المقابلة التجريبية ---------- */
+const MK={on:false,list:[],i:0,res:[],len:10,focus:'mix',sec:120,left:0,shown:false,tick:null};
+function buildMock(){const intro=Q.find(q=>q.d==='beh');const pick=(arr,n)=>arr.sort(()=>Math.random()-0.5).slice(0,n);
+  const nonMC=Q.filter(q=>!q.mc&&q.d!=='beh');let list=[intro];const n=MK.len-1;
+  if(MK.focus==='mix'){const w={hvac:.3,fire:.25,plumb:.15,office:.25,code:.05};let rest=n;ORDER.filter(d=>w[d]).forEach((d,i,a)=>{const k=i===a.length-1?rest:Math.max(1,Math.round(n*w[d]));rest-=k;list=list.concat(pick(nonMC.filter(q=>q.d===d),k));});}
+  else list=list.concat(pick(nonMC.filter(q=>q.d===MK.focus),n));
+  const beh=Q.filter(q=>q.d==='beh'&&q!==intro);list.push(pick(beh,1)[0]);return list.slice(0,MK.len);}
+function mock(){if(!MK.on)return `<div class="sec-h"><h2>مقابلة تجريبية</h2><span>تبدأ بالتعريف بالنفس وتنتهي بسؤال سلوكي، والأسئلة بينهما بتوزيع المقابلات الفعلية</span></div>
+  <div class="card grid" style="gap:16px">
+   <div><b>عدد الأسئلة</b><div class="seg" style="margin-top:6px">${[8,12,20].map(n=>`<button data-ml="${n}" aria-pressed="${MK.len===n}">${ar(n)}</button>`).join('')}</div></div>
+   <div><b>التركيز</b><div class="seg" style="margin-top:6px;flex-wrap:wrap">${[['mix','متوازن'],['hvac','تكييف'],['fire','حريق'],['plumb','سباكة'],['office','مكتب فني']].map(([k,t])=>`<button data-mf="${k}" aria-pressed="${MK.focus===k}">${t}</button>`).join('')}</div></div>
+   <div><b>الوقت لكل سؤال</b><div class="seg" style="margin-top:6px">${[[90,'٩٠ ثانية'],[120,'دقيقتان'],[0,'بدون توقيت']].map(([k,t])=>`<button data-ms="${k}" aria-pressed="${MK.sec===k}">${t}</button>`).join('')}</div></div>
+   <div class="row"><button class="btn pri" id="mstart">ابدأ المقابلة</button><span class="hint">${SAMPLE?'يمكنك طلب تقييم آلي لكل إجابة.':'قيّم نفسك بعد رؤية الإجابة النموذجية.'}${DICT?' ويمكنك الإجابة بصوتك.':''}</span></div></div>
+  ${S.mock.length?`<div class="sec-h"><h2 style="font-size:18px">مقابلاتك السابقة</h2></div><div class="card tbl"><table class="t"><tr><th>التاريخ</th><th>الأسئلة</th><th>المتوسط</th></tr>${S.mock.slice(-6).reverse().map(x=>`<tr><td>${new Date(x.t).toLocaleDateString('ar-SA-u-ca-gregory')}</td><td>${ar(x.n)}</td><td>${ar(x.avg)} / ١٠</td></tr>`).join('')}</table></div>`:''}`;
+  if(MK.i>=MK.list.length)return mockReport();
+  const q=MK.list[MK.i],c=col(q.d),key='m'+MK.i,r=MK.res[MK.i];
+  return `<div class="row" style="margin:6px 0 14px"><h2>السؤال ${ar(MK.i+1)} من ${ar(MK.list.length)}</h2><span class="sp"></span>${MK.sec?`<span class="timer ${MK.left<=15?'low':''}" id="tm" aria-live="off">${fmt(MK.left)}</span>`:''}</div>
+  <div class="bar" style="margin-bottom:14px"><i style="width:${100*MK.i/MK.list.length}%;background:var(--accent)"></i></div>
+  <div class="card" style="border-top:5px solid ${c}"><div class="row"><span class="chip"><span class="dot" style="background:${c}"></span>${DISC[q.d][0]}</span></div>
+   <div class="front" style="font-family:var(--display);font-size:23px;color:var(--ink);margin:10px 0">${esc(q.q)}</div>
+   ${evalBox(q,key)}
+   <div class="row" style="margin-top:10px"><button class="btn" id="mshow">${MK.shown?'إخفاء الإجابة النموذجية':'اعرض الإجابة النموذجية'}</button></div>
+   ${MK.shown?`<div class="ans">${blocks(q.b,c)}</div>${refCard(q.r,c)}`:''}
+   <div style="margin-top:14px"><b>قيّم إجابتك</b>${r&&r.ai!=null?` <span class="muted">(التقييم الآلي: ${ar(r.ai)}/١٠)</span>`:''}<div class="seg" style="margin-top:6px">${[2,4,6,8,10].map(v=>`<button data-sc="${v}" aria-pressed="${r&&r.self===v}">${ar(v)}</button>`).join('')}</div>
+   <div class="row" style="margin-top:12px"><button class="btn pri" id="mnext">${MK.i+1<MK.list.length?'السؤال التالي':'إنهاء المقابلة'}</button><button class="btn" id="mquit">إنهاء الآن</button></div></div></div>`;}
+const fmt=s=>ar(Math.floor(s/60))+':'+ar(String(s%60).padStart(2,'0'));
+function mockReport(){const done=MK.res.filter(Boolean);const sc=r=>r.ai!=null?r.ai:(r.self||0);
+  const avg=done.length?Math.round(10*done.reduce((a,r)=>a+sc(r),0)/done.length)/10:0;const by={};done.forEach(r=>{const d=byId[r.id].d;(by[d]=by[d]||[]).push(sc(r));});
+  const weakQ=done.filter(r=>sc(r)<6).map(r=>byId[r.id]);
+  return `<div class="sec-h"><h2>تقرير المقابلة</h2></div><div class="grid g3"><div class="card tile"><div class="big">${ar(avg)}</div><div class="lbl">متوسط الدرجة من ١٠</div></div><div class="card tile"><div class="big">${ar(done.length)}</div><div class="lbl">سؤالاً أجبت عنه</div></div><div class="card tile"><div class="big" style="color:var(--warn)">${ar(weakQ.length)}</div><div class="lbl">أُضيفت للمراجعة</div></div></div>
+  <div class="card" style="margin-top:14px">${Object.keys(by).map(d=>{const v=by[d].reduce((a,b)=>a+b,0)/by[d].length;return `<div class="disc-row"><b><span class="dot" style="background:${col(d)}"></span> ${DISC[d][0]}</b><div class="bar"><i style="width:${v*10}%;background:${col(d)}"></i></div><em>${ar(Math.round(v*10)/10)} / ١٠</em></div>`;}).join('')}</div>
+  ${weakQ.length?`<div class="sec-h"><h2 style="font-size:18px">راجع هذه الأسئلة</h2></div>`+weakQ.map(q=>`<div class="card" style="margin-bottom:8px"><b>${esc(q.q)}</b></div>`).join(''):''}
+  <div class="row" style="margin-top:14px"><button class="btn pri" id="mnew">مقابلة جديدة</button></div>`;}
+function stopTick(){if(MK.tick){clearInterval(MK.tick);MK.tick=null;}}
+function bindMock(){const re=()=>{document.getElementById('app').innerHTML=mock();bindMock();};
+  document.querySelectorAll('[data-ml]').forEach(b=>b.addEventListener('click',()=>{MK.len=+b.dataset.ml;re();}));
+  document.querySelectorAll('[data-mf]').forEach(b=>b.addEventListener('click',()=>{MK.focus=b.dataset.mf;re();}));
+  document.querySelectorAll('[data-ms]').forEach(b=>b.addEventListener('click',()=>{MK.sec=+b.dataset.ms;re();}));
+  const st=document.getElementById('mstart');if(st)st.addEventListener('click',()=>{Object.assign(MK,{on:true,list:buildMock(),i:0,res:[],shown:false,left:MK.sec});startTick();re();});
+  const sh=document.getElementById('mshow');if(sh)sh.addEventListener('click',()=>{const ta=document.getElementById('ta-m'+MK.i),v=ta?ta.value:'';MK.shown=!MK.shown;re();const t2=document.getElementById('ta-m'+MK.i);if(t2)t2.value=v;});
+  document.querySelectorAll('[data-sc]').forEach(b=>b.addEventListener('click',()=>{const ta=document.getElementById('ta-m'+MK.i),v=ta?ta.value:'';const q=MK.list[MK.i];MK.res[MK.i]=Object.assign(MK.res[MK.i]||{id:q.id},{self:+b.dataset.sc});re();const t2=document.getElementById('ta-m'+MK.i);if(t2)t2.value=v;}));
+  window._afterGrade={['m'+MK.i]:sc=>{const q=MK.list[MK.i];MK.res[MK.i]=Object.assign(MK.res[MK.i]||{id:q.id},{ai:sc});const lbl=document.querySelector('#app b');}};
+  const nx=document.getElementById('mnext');if(nx)nx.addEventListener('click',()=>{const q=MK.list[MK.i];if(!MK.res[MK.i])MK.res[MK.i]={id:q.id};MK.i++;MK.shown=false;MK.left=MK.sec;if(MK.i>=MK.list.length)finishMock();re();});
+  const qt=document.getElementById('mquit');if(qt)qt.addEventListener('click',()=>{MK.list=MK.list.slice(0,MK.i+1);if(!MK.res[MK.i])MK.res[MK.i]={id:MK.list[MK.i].id};MK.i=MK.list.length;finishMock();re();});
+  const nw=document.getElementById('mnew');if(nw)nw.addEventListener('click',()=>{MK.on=false;re();});}
+function finishMock(){stopTick();const done=MK.res.filter(r=>r&&(r.self||r.ai!=null));const sc=r=>r.ai!=null?r.ai:(r.self||0);
+  done.forEach(r=>{if(sc(r)<6)S.st[r.id]='r';});if(done.length){S.mock.push({t:Date.now(),n:done.length,avg:Math.round(10*done.reduce((a,r)=>a+sc(r),0)/done.length)/10});S.mock=S.mock.slice(-30);}save();}
+function startTick(){stopTick();if(!MK.sec)return;MK.tick=setInterval(()=>{if(location.hash!=='#mock'||!MK.on||MK.i>=MK.list.length){return;}MK.left=Math.max(0,MK.left-1);const t=document.getElementById('tm');if(t){t.textContent=fmt(MK.left);t.classList.toggle('low',MK.left<=15);}},1000);}
+/* ---------- المكتب الفني ---------- */
+function office(){const OQ=Q.filter(q=>q.id[0]==='o');const it=S.intro||{};
+  return `<div class="sec-h"><h2>المكتب الفني</h2><span>صلب الوظيفة: ما يفصل مهندس المكتب الفني عن الرسّام</span></div>
+  <div class="card"><h3 style="font-size:18px;margin-bottom:10px">السلسلة التي يجب أن ترسمها على السبورة</h3>
+   <div class="chain">${D.chain.map((s,i)=>`<span>${esc(s)}</span>${i<D.chain.length-1?'<i>←</i>':''}`).join('')}</div>
+   <p class="muted" style="margin-bottom:0">في المقابلة: اختر نظاماً واحداً واحكِ رحلته على هذه السلسلة، وماذا يمكن أن يسوء عند كل نقطة تسليم.</p></div>
+  <div class="sec-h"><h2 style="font-size:20px">صنّف كل معلومة قبل أن تقولها</h2></div>
+  <div class="grid g3">${[['كود','var(--code)','متطلب إلزامي في كود أو معيار: «الكود يشترط...»'],['مصنّع','var(--hvac)','حد يضعه صانع المعدة لضمان أدائها: «هذا حد من المصنّع»'],['مواصفات','var(--office)','بند تعاقدي في مواصفات المشروع، قد يكون أشد من الكود'],['ممارسة','var(--beh)','ممارسة هندسية جيدة لكنها غير إلزامية'],['تحقق','var(--fire)','المبدأ ثابت لكن رقم البند يتبع الإصدار المعتمد']].map(([t,c,d])=>`<div class="card"><span class="tag" style="background:color-mix(in srgb,${c} 15%,transparent);color:${c};margin:0">${t}</span><p style="margin:8px 0 0">${d}</p></div>`).join('')}</div>
+  <div class="sec-h"><h2 style="font-size:20px">ابنِ مقدمتك: «عرّفني بنفسك»</h2><span>خمس خانات، تُحفظ تلقائياً</span></div>
+  <div class="card grid g2" style="gap:12px">${D.intro.map((s,i)=>`<div><label for="in${i}"><b>${ar(i+1)}. ${esc(s[0])}</b> <span class="muted" style="font-size:14px">${esc(s[1])}</span></label><textarea id="in${i}" data-in="${i}" style="min-height:70px">${esc(it['s'+i]||'')}</textarea></div>`).join('')}
+   <div><b>معاينة المقدمة</b><div class="verdict" id="introPrev" style="min-height:120px"></div><div class="hint" id="introTime"></div><button class="btn sm" id="copyIntro" style="margin-top:6px">انسخ النص</button></div></div>
+  <div class="sec-h"><h2 style="font-size:20px">أسئلة المكتب الفني</h2><span>${ar(OQ.length)} سؤالاً جديداً + أسئلة الإشراف والعقود في البنك</span></div>
+  ${OQ.map(q=>{F.open[q.id]=F.open[q.id]||false;return qItem(q);}).join('')}
+  <a class="btn" href="#bank" data-go-disc="office">كل أسئلة المكتب الفني والتنفيذ في البنك</a>`;}
+function introText(){const it=S.intro||{};return D.intro.map((_,i)=>(it['s'+i]||'').trim()).filter(Boolean).join(' ');}
+function bindOffice(){const upd=()=>{const t=introText();const w=t?t.split(/\s+/).length:0;document.getElementById('introPrev').textContent=t||'املأ الخانات لتظهر مقدمتك هنا.';document.getElementById('introTime').textContent=w?`${ar(w)} كلمة · حوالي ${ar(Math.round(w/2.2))} ثانية عند الإلقاء الهادئ (الهدف ٦٠–٩٠ ثانية)`:'';};
+  upd();document.querySelectorAll('[data-in]').forEach(t=>t.addEventListener('input',()=>{S.intro=S.intro||{};S.intro['s'+t.dataset.in]=t.value;upd();clearTimeout(t._t);t._t=setTimeout(save,600);}));
+  document.getElementById('copyIntro').addEventListener('click',e=>{navigator.clipboard.writeText(introText()).then(()=>e.target.textContent='نُسخ').catch(()=>e.target.textContent='انسخ يدوياً من المعاينة');});
+  document.getElementById('app').addEventListener('click',e=>{const t=e.target.closest('[data-tog]');if(t&&location.hash==='#office'){F.open[t.dataset.tog]=!F.open[t.dataset.tog];document.getElementById('it-'+t.dataset.tog).outerHTML=qItem(byId[t.dataset.tog]);}
+    const s=e.target.closest('[data-st]');if(s&&location.hash==='#office'){const [id,v]=s.dataset.st.split('|');S.st[id]=S.st[id]===v?undefined:v;if(!S.st[id])delete S.st[id];save();document.getElementById('it-'+id).outerHTML=qItem(byId[id]);}
+    const v=e.target.closest('[data-ev]');if(v&&location.hash==='#office'){const h=document.getElementById('evh-'+v.dataset.ev);h.innerHTML=h.innerHTML?'':evalBox(byId[v.dataset.ev],'o'+v.dataset.ev);}});}
+/* ---------- الأكواد والأرقام ---------- */
+function codes(){return `<div class="sec-h"><h2>الأكواد والإصدارات</h2></div>
+  <div class="callout"><b>فخ الإصدار في السعودية.</b> SBC 801 يحيل في الفصل 80 إلى إصدارات محددة من NFPA، وهي غالباً أقدم من آخر إصدار منشور. قبل أن تستشهد ببند في مقابلة أو مراسلة قل: «سأتحقق من الإصدار الذي يعتمده SBC 801 للمشروع». وإذا طلبت المواصفات إصداراً أحدث فالتزم بالأشد وقل ذلك.</div>
+  <div class="card tbl" style="margin-top:14px"><table class="t"><tr><th>المعيار</th><th>الإصدار في بطاقات المرجع هنا</th><th>الإصدار المعتمد في SBC 801 (حسب دليل المكتب الفني، يُتحقق منه)</th></tr>
+  ${D.ed.map(e=>`<tr><td><b>${e[0]}</b></td><td>${e[1]}</td><td>${e[2]}</td></tr>`).join('')}</table>
+  <p class="hint" style="margin-bottom:0">مثال على الفرق: خزان وقود مضخة الديزل في NFPA 20 (2022) يُحسب لـ ١٢ ساعة حسب استهلاك المحرك، أما الإصدارات الأقدم فتعتمد ١ جالون لكل حصان + ١٠٪.</p></div>
+  <div class="sec-h"><h2 style="font-size:20px">كيف تقرأ بطاقة المرجع</h2></div>
+  <div class="grid g2"><div class="card">${refCard(['NFPA 13 (2022)','البند 29.2.1.1 Hydrostatic Tests','200 psi لمدة ساعتين بدون فقد (أو 50 psi فوق الضغط إن تجاوز 150 psi).'],'var(--fire)')}</div>
+  <div class="card"><ul style="margin:0;padding-inline-start:20px"><li>الرقم بين القوسين هو الإصدار الذي أُخذ منه رقم البند.</li><li>عند عدم التأكد من رقم البند يُذكر الفصل وعنوانه.</li><li>الملخص بصياغتنا وليس نصاً حرفياً من الكود.</li><li>لا تُذكر أرقام صفحات لأنها تختلف بين الطبعات.</li></ul></div></div>
+  <div class="sec-h"><h2 style="font-size:20px">أرقام تحفظها قبل المقابلة</h2></div>
+  <div class="card tbl"><table class="t">${D.nums.map((r,i)=>`<tr>${r.map(x=>i?`<td>${esc(x)}</td>`:`<th>${esc(x)}</th>`).join('')}</tr>`).join('')}</table></div>`;}
+/* ---------- خطتي ---------- */
+function plan(){const sv=S.self||{};const rated=D.topics.map((t,i)=>[t,sv['t'+i]||0,i]);const weak=rated.filter(r=>r[1]).sort((a,b)=>a[1]-b[1]).slice(0,3);
+  return `<div class="sec-h"><h2>خطتي</h2><span>قيّم نفسك بصدق، ثم اتبع الأيام السبعة</span></div>
+  <div class="grid g2"><div class="card"><h3 style="font-size:18px;margin-bottom:6px">التقييم الذاتي</h3><p class="hint" style="margin-top:0">١ = لا أستطيع الحديث عنه، ٥ = أشرحه بثقة مع أرقام وأمثلة</p>
+   ${rated.map(([t,v,i])=>`<div class="topic"><span>${esc(t)}</span><div class="seg">${[1,2,3,4,5].map(n=>`<button data-sv="${i}|${n}" aria-pressed="${v===n}">${ar(n)}</button>`).join('')}</div></div>`).join('')}</div>
+   <div class="grid" style="align-content:start"><div class="card"><h3 style="font-size:18px;margin-bottom:8px">يجب مذاكرته أولاً</h3>${weak.length?weak.map(w=>`<div class="topic"><b>${esc(w[0])}</b><span class="pill r">${ar(w[1])} / ٥</span></div>`).join(''):'<p class="muted" style="margin:0">قيّم المواضيع لتظهر أولوياتك هنا.</p>'}</div>
+   <div class="card"><h3 style="font-size:18px;margin-bottom:8px">خطة الأيام السبعة</h3>${D.plan.map((p,i)=>`<label class="day" for="pd${i}"><input type="checkbox" id="pd${i}" data-pd="${i}" ${S.plan['d'+i]?'checked':''}><span><b>${p[0]}: ${esc(p[1])}</b><br><span class="muted" style="font-size:14px">${esc(p[2])}</span></span></label>`).join('<hr style="border:0;border-top:1px solid var(--line);margin:8px 0">')}</div></div></div>`;}
+function bindPlan(){document.querySelectorAll('[data-sv]').forEach(b=>b.addEventListener('click',()=>{const [i,n]=b.dataset.sv.split('|');S.self['t'+i]=+n;save();document.getElementById('app').innerHTML=plan();bindPlan();}));
+  document.querySelectorAll('[data-pd]').forEach(c=>c.addEventListener('change',()=>{S.plan['d'+c.dataset.pd]=c.checked;save();}));}
+/* ---------- التوجيه ---------- */
+const VIEWS={home:[home,()=>{}],bank:[bank,bindBank],flash:[flash,bindFlash],quiz:[quiz,bindQuiz],mock:[mock,bindMock],office:[office,bindOffice],codes:[codes,()=>{}],plan:[plan,bindPlan]};
+function route(){const k=(location.hash||'#home').slice(1);const v=VIEWS[k]||VIEWS.home;const key=VIEWS[k]?k:'home';
+  document.querySelectorAll('#tabs a').forEach(a=>a.setAttribute('aria-current',a.getAttribute('href')==='#'+key?'page':'false'));
+  const app=document.getElementById('app');const fresh=app.cloneNode(false);app.replaceWith(fresh);fresh.innerHTML=v[0]();v[1]();if(window._markSec)window._markSec();}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-go-disc]');if(a){F.d=a.dataset.goDisc;F.sec='all';F.st='all';F.q='';}
+  const f=e.target.closest('[data-go-flash]');if(f){FL.d=f.dataset.goFlash;FL.cur=null;}
+  const s=e.target.closest('[data-go-st]');if(s){F.st=s.dataset.goSt;F.d='all';}});
+
+/* شاشة البداية */
+(function(){const sp=document.getElementById('splash');if(!sp)return;const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const close=()=>{sp.classList.add('hide');setTimeout(()=>sp.remove(),500);};document.getElementById('skip').addEventListener('click',close);sp.addEventListener('click',close);setTimeout(close,rm?700:2700);})();
+/* إملاء عبر المتصفح عند عدم توفر إملاء Claude */
+function speechShim(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return null;let rec=null,cb={p:()=>{},f:()=>{},s:()=>{}};
+  return {onPartial:f=>cb.p=f,onFinal:f=>cb.f=f,onState:f=>cb.s=f,
+    start(){return new Promise((res,rej)=>{try{rec=new R();rec.lang='ar-SA';rec.interimResults=true;rec.continuous=true;
+      rec.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)cb.f({text:t});else interim+=t;}cb.p({text:interim});};
+      rec.onerror=e=>{cb.s({state:'idle',reason:e.error});if(e.error==='not-allowed')rej({code:'not_granted'});};
+      rec.onend=()=>cb.s({state:'idle',reason:'stopped'});rec.onstart=()=>{cb.s({state:'listening'});res();};rec.start();}catch(err){rej(err);}});},
+    stop(){try{rec&&rec.stop();}catch(e){}return Promise.resolve();}};}
+setTimeout(()=>{if(!DICT){DICT=speechShim();if(DICT&&['bank','mock','office'].includes((location.hash||'#home').slice(1)))route();}},1500);
+/* التثبيت كتطبيق */
+const inFrame=window.self!==window.top;
+let deferred=null;const ib=document.getElementById('installBtn');
+const standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;if(!standalone)ib.classList.add('show');});
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+if(isIOS&&!standalone&&!inFrame)ib.classList.add('show');
+if(inFrame&&window.INSTALL_URL){const a=document.createElement('a');a.className='btn sm acc';a.href=window.INSTALL_URL;a.target='_blank';a.rel='noopener';a.textContent='ثبّت التطبيق';ib.replaceWith(a);}
+ib.addEventListener('click',async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;ib.classList.remove('show');}
+  else if(inFrame&&window.INSTALL_URL){location.href=window.INSTALL_URL;}
+  else if(isIOS){document.getElementById('iosTip').classList.add('show');}});
+document.getElementById('iosClose').addEventListener('click',()=>document.getElementById('iosTip').classList.remove('show'));
+window.addEventListener('appinstalled',()=>ib.classList.remove('show'));
+if('serviceWorker' in navigator&&!inFrame&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+
+/* القائمة الجانبية */
+(function(){const side=document.getElementById('side'),bd=document.getElementById('backdrop'),mb=document.getElementById('menuBtn');
+  const secs=[];Q.forEach(q=>{let s=secs.find(x=>x.n===q.sec);if(!s){s={n:q.sec,c:0,d:{}};secs.push(s);}s.c++;s.d[q.d]=(s.d[q.d]||0)+1;});
+  const domD=s=>Object.entries(s.d).sort((a,b)=>b[1]-a[1])[0][0];
+  document.getElementById('secNav').innerHTML=secs.map((s,i)=>`<button class="secl" data-sec="${i}"><span class="dot" style="background:${col(domD(s))}"></span><span>${esc(s.n)}</span><em>${ar(s.c)}</em></button>`).join('');
+  const close=()=>{side.classList.remove('open');bd.classList.remove('show');mb.setAttribute('aria-expanded','false');};
+  mb.addEventListener('click',()=>{const o=!side.classList.contains('open');side.classList.toggle('open',o);bd.classList.toggle('show',o);mb.setAttribute('aria-expanded',String(o));});
+  bd.addEventListener('click',close);document.addEventListener('keydown',e=>{if(e.key==='Escape')close();});
+  side.addEventListener('click',e=>{const b=e.target.closest('[data-sec]');if(b){F.sec=secs[+b.dataset.sec].n;F.d='all';F.st='all';F.q='';F.lim=40;if(location.hash==='#bank')route();else location.hash='#bank';}if(e.target.closest('a,[data-sec]'))close();});
+  window._markSec=()=>{document.querySelectorAll('.secl').forEach(b=>b.setAttribute('aria-current',String(location.hash==='#bank'&&secs[+b.dataset.sec].n===F.sec)));};})();
+window.addEventListener('hashchange',()=>{window.scrollTo(0,0);route();});
+route();
+})();
+</script>
+</body>
+</html>
