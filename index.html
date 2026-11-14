@@ -113,6 +113,11 @@ a.btn.pri{color:var(--paper)}
 .pill.r{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
 .qbody{padding:0 16px 16px 16px;border-top:1px solid var(--line)}
 .ans{padding-top:12px;font-size:17px}
+.kp{list-style:none;margin:12px 0 6px;padding:0;display:grid;gap:8px}
+.kp li{position:relative;padding:9px 34px 9px 12px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-size:17px;line-height:1.6}
+.kp li::before{content:"";position:absolute;right:13px;top:17px;width:9px;height:9px;border-radius:50%;background:currentColor;opacity:.45}
+details.full{margin-top:8px}details.full>summary{cursor:pointer;color:var(--muted);font-size:15px;padding:6px 0;list-style:revert}
+details.full .ans{padding-top:4px;font-size:16px}
 .ans p{margin:0 0 8px}.ans ul{margin:0 0 8px;padding-inline-start:22px}.ans li{margin-bottom:4px}
 .ans .note{color:var(--muted);font-style:italic;font-size:15px}
 .ans table{border-collapse:collapse;width:100%;margin:6px 0}.ans td,.ans th{border:1px solid var(--line);padding:6px 10px}
@@ -245,6 +250,9 @@ function blocks(bl,c){let h='',inUl=false;
     if(b.k==='b'){if(!inUl){h+='<ul>';inUl=true;}h+=`<li>${t}</li>`;}
     else{if(inUl){h+='</ul>';inUl=false;}h+=`<p${b.k==='note'?' class="note"':''}>${t}</p>`;}});
   if(inUl)h+='</ul>';return h;}
+function kp(q,c){if(!q.k)return '';return '<ul class="kp">'+q.k.map(x=>{const m=x.match(/^([^:：]{1,28}):\s*(.+)$/);return '<li>'+(m?`<b style="color:${c}">${esc(m[1])}:</b> ${esc(m[2])}`:esc(x))+'</li>';}).join('')+'</ul>';}
+function ansView(q,c){return kp(q,c)+`<details class="full"><summary>الإجابة بالتفصيل</summary><div class="ans">${blocks(q.b,c)}</div></details>`;}
+const QT=q=>q.s||q.q;
 const BOOK='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2z"/><path d="M22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></svg>';
 function refCard(r,c){const head=r[0]==='—'?r[1]:`${r[0]}  ·  ${r[1]}`;
   return `<div class="ref" style="background:color-mix(in srgb,${c} 9%,var(--card));border-color:color-mix(in srgb,${c} 35%,transparent)"><div class="ic" style="background:${c}">${BOOK}</div><div><b><span style="color:${c}">المرجع في الكود:</span> ${esc(head)}</b><span>${esc(r[2])}</span></div></div>`;}
@@ -322,10 +330,10 @@ function bank(){const secs=[...new Set(Q.map(q=>q.sec))];
    <select id="fst" aria-label="الحالة"><option value="all">كل الحالات</option><option value="new" ${F.st==='new'?'selected':''}>لم أقيّمها</option><option value="r" ${F.st==='r'?'selected':''}>للمراجعة</option><option value="k" ${F.st==='k'?'selected':''}>أعرفها</option></select></div>
   <div class="row" style="margin-bottom:14px"><button class="chip" data-fd="all" aria-pressed="${F.d==='all'}">الكل</button>${ORDER.map(d=>`<button class="chip" data-fd="${d}" aria-pressed="${F.d===d}"><span class="dot" style="background:${col(d)}"></span>${DISC[d][0]}</button>`).join('')}</div>
   <div id="list"></div>`;}
-function filtered(){const t=F.q.trim().toLowerCase();return Q.filter(q=>(F.d==='all'||q.d===F.d)&&(F.sec==='all'||q.sec===F.sec)&&(F.st==='all'||(F.st==='new'?!S.st[q.id]:S.st[q.id]===F.st))&&(!t||(q.q+' '+plain(q)+' '+q.r.join(' ')).toLowerCase().includes(t)));}
+function filtered(){const t=F.q.trim().toLowerCase();return Q.filter(q=>(F.d==='all'||q.d===F.d)&&(F.sec==='all'||q.sec===F.sec)&&(F.st==='all'||(F.st==='new'?!S.st[q.id]:S.st[q.id]===F.st))&&(!t||(q.q+' '+(q.s||'')+' '+(q.k||[]).join(' ')+' '+plain(q)+' '+q.r.join(' ')).toLowerCase().includes(t)));}
 function qItem(q){const c=col(q.d),open=F.open[q.id];
-  return `<article class="qitem" id="it-${q.id}"><button class="qhead" data-tog="${q.id}" aria-expanded="${!!open}"><span class="num" style="background:${c}">${esc(q.n)}</span><span class="qtext">${esc(q.q)}<span class="meta">${esc(q.sec)}${q.sub&&q.sub!==q.sec?' · '+esc(q.sub):''}</span></span>${statusPill(q.id)}</button>
-  ${open?`<div class="qbody"><div class="ans">${blocks(q.b,c)}</div>${figs(q)}${refCard(q.r,c)}
+  return `<article class="qitem" id="it-${q.id}"><button class="qhead" data-tog="${q.id}" aria-expanded="${!!open}"><span class="num" style="background:${c}">${esc(q.n)}</span><span class="qtext">${esc(QT(q))}<span class="meta">${esc(q.sec)}${q.sub&&q.sub!==q.sec?' · '+esc(q.sub):''}</span></span>${statusPill(q.id)}</button>
+  ${open?`<div class="qbody">${ansView(q,c)}${figs(q)}${refCard(q.r,c)}
    <div class="actions"><button class="btn sm ${S.st[q.id]==='k'?'on-k':''}" data-st="${q.id}|k">أعرفها</button><button class="btn sm ${S.st[q.id]==='r'?'on-r':''}" data-st="${q.id}|r">أراجعها لاحقاً</button><button class="btn sm" data-ev="${q.id}">جرّب الإجابة بنفسك</button></div><div id="evh-${q.id}"></div></div>`:''}</article>`;}
 function drawList(){const L=filtered();document.getElementById('cnt').textContent=ar(L.length)+' سؤالاً';
   document.getElementById('list').innerHTML=L.slice(0,F.lim).map(qItem).join('')+(L.length>F.lim?`<button class="btn more" id="more">عرض المزيد (${ar(L.length-F.lim)})</button>`:'')+(L.length?'':'<div class="card muted">لا توجد أسئلة بهذه الشروط. غيّر البحث أو المرشحات.</div>');}
@@ -348,8 +356,8 @@ function flash(){if(!FL.cur||(FL.d!=='all'&&FL.cur.d!==FL.d))pickCard();const q=
   <div class="grid g4" style="margin-bottom:14px">${[0,1,2,3].map(i=>`<div class="card tile"><div class="big">${ar(i<3?dist[i]:dist[3]+dist[4])}</div><div class="lbl">${['صندوق ١: جديد أو صعب','صندوق ٢','صندوق ٣','صندوق ٤ و٥: متمكن'][i]}</div></div>`).join('')}</div>
   <div class="card flash" id="fcard" role="button" tabindex="0" aria-label="اقلب البطاقة" style="border-top:5px solid ${c}">
    <div class="row"><span class="num" style="background:${c}">${esc(q.n)}</span><span class="muted">${esc(q.sec)}</span></div>
-   <div class="front">${esc(q.q)}</div>
-   ${FL.flip?`<div class="ans">${blocks(q.b,c)}</div>${figs(q)}${refCard(q.r,c)}`:'<div class="hint">جاوب في سرّك أو بصوت عالٍ، ثم اضغط على البطاقة لترى الإجابة.</div>'}
+   <div class="front">${esc(QT(q))}</div>
+   ${FL.flip?`${ansView(q,c)}${figs(q)}${refCard(q.r,c)}`:'<div class="hint">جاوب في سرّك أو بصوت عالٍ، ثم اضغط على البطاقة لترى الإجابة.</div>'}
   </div>
   ${FL.flip?`<div class="row" style="margin-top:12px"><button class="btn" data-rate="1" style="border-color:var(--bad)">لم أعرفها</button><button class="btn" data-rate="0">جزئياً</button><button class="btn" data-rate="2" style="border-color:var(--good)">عرفتها</button></div>`:''}`;}
 function bindFlash(){const re=()=>{document.getElementById('app').innerHTML=flash();bindFlash();};
@@ -374,7 +382,7 @@ function quiz(){const MC=Q.filter(q=>q.mc);
    <div class="bar" style="margin-bottom:14px"><i style="width:${100*QZ.i/QZ.list.length}%;background:var(--accent)"></i></div>
    <div class="card"><div class="front" style="font-family:var(--display);font-size:22px;color:var(--ink);margin-bottom:14px">${esc(q.mc.stem)}</div>
    ${q._o.map(k=>`<button class="opt ${p!==null?(k===q.mc.a?'ok':(k===p?'no':'')):''}" data-op="${k}" ${p!==null?'disabled':''}>${esc(q.mc.o[k])}</button>`).join('')}
-   ${p!==null?`<div class="ans" style="margin-top:6px">${blocks(q.b,c)}</div>${refCard(q.r,c)}<div class="row" style="margin-top:12px"><button class="btn pri" id="qnext">${QZ.i+1<QZ.list.length?'السؤال التالي':'اعرض النتيجة'}</button></div>`:''}</div>`;}
+   ${p!==null?`<div style="margin-top:6px">${ansView(q,c)}</div>${refCard(q.r,c)}<div class="row" style="margin-top:12px"><button class="btn pri" id="qnext">${QZ.i+1<QZ.list.length?'السؤال التالي':'اعرض النتيجة'}</button></div>`:''}</div>`;}
 function bindQuiz(){const re=()=>{document.getElementById('app').innerHTML=quiz();bindQuiz();};
   document.querySelectorAll('[data-qn]').forEach(b=>b.addEventListener('click',()=>{const MC=Q.filter(q=>q.mc).sort(()=>Math.random()-0.5).slice(0,+b.dataset.qn);MC.forEach(q=>q._o=q.mc.o.map((_,i)=>i).sort(()=>Math.random()-0.5));Object.assign(QZ,{on:true,list:MC,i:0,s:0,picked:null,wrong:[]});re();}));
   document.querySelectorAll('[data-op]').forEach(b=>b.addEventListener('click',()=>{const q=QZ.list[QZ.i];QZ.picked=+b.dataset.op;if(QZ.picked===q.mc.a)QZ.s++;else{QZ.wrong.push(q.id);S.st[q.id]='r';}re();}));
@@ -398,10 +406,10 @@ function mock(){if(!MK.on)return `<div class="sec-h"><h2>مقابلة تجريب
   return `<div class="row" style="margin:6px 0 14px"><h2>السؤال ${ar(MK.i+1)} من ${ar(MK.list.length)}</h2><span class="sp"></span>${MK.sec?`<span class="timer ${MK.left<=15?'low':''}" id="tm" aria-live="off">${fmt(MK.left)}</span>`:''}</div>
   <div class="bar" style="margin-bottom:14px"><i style="width:${100*MK.i/MK.list.length}%;background:var(--accent)"></i></div>
   <div class="card" style="border-top:5px solid ${c}"><div class="row"><span class="chip"><span class="dot" style="background:${c}"></span>${DISC[q.d][0]}</span></div>
-   <div class="front" style="font-family:var(--display);font-size:23px;color:var(--ink);margin:10px 0">${esc(q.q)}</div>
+   <div class="front" style="font-family:var(--display);font-size:23px;color:var(--ink);margin:10px 0">${esc(QT(q))}</div>
    ${evalBox(q,key)}
    <div class="row" style="margin-top:10px"><button class="btn" id="mshow">${MK.shown?'إخفاء الإجابة النموذجية':'اعرض الإجابة النموذجية'}</button></div>
-   ${MK.shown?`<div class="ans">${blocks(q.b,c)}</div>${refCard(q.r,c)}`:''}
+   ${MK.shown?`${ansView(q,c)}${refCard(q.r,c)}`:''}
    <div style="margin-top:14px"><b>قيّم إجابتك</b>${r&&r.ai!=null?` <span class="muted">(التقييم الآلي: ${ar(r.ai)}/١٠)</span>`:''}<div class="seg" style="margin-top:6px">${[2,4,6,8,10].map(v=>`<button data-sc="${v}" aria-pressed="${r&&r.self===v}">${ar(v)}</button>`).join('')}</div>
    <div class="row" style="margin-top:12px"><button class="btn pri" id="mnext">${MK.i+1<MK.list.length?'السؤال التالي':'إنهاء المقابلة'}</button><button class="btn" id="mquit">إنهاء الآن</button></div></div></div>`;}
 const fmt=s=>ar(Math.floor(s/60))+':'+ar(String(s%60).padStart(2,'0'));
@@ -410,7 +418,7 @@ function mockReport(){const done=MK.res.filter(Boolean);const sc=r=>r.ai!=null?r
   const weakQ=done.filter(r=>sc(r)<6).map(r=>byId[r.id]);
   return `<div class="sec-h"><h2>تقرير المقابلة</h2></div><div class="grid g3"><div class="card tile"><div class="big">${ar(avg)}</div><div class="lbl">متوسط الدرجة من ١٠</div></div><div class="card tile"><div class="big">${ar(done.length)}</div><div class="lbl">سؤالاً أجبت عنه</div></div><div class="card tile"><div class="big" style="color:var(--warn)">${ar(weakQ.length)}</div><div class="lbl">أُضيفت للمراجعة</div></div></div>
   <div class="card" style="margin-top:14px">${Object.keys(by).map(d=>{const v=by[d].reduce((a,b)=>a+b,0)/by[d].length;return `<div class="disc-row"><b><span class="dot" style="background:${col(d)}"></span> ${DISC[d][0]}</b><div class="bar"><i style="width:${v*10}%;background:${col(d)}"></i></div><em>${ar(Math.round(v*10)/10)} / ١٠</em></div>`;}).join('')}</div>
-  ${weakQ.length?`<div class="sec-h"><h2 style="font-size:18px">راجع هذه الأسئلة</h2></div>`+weakQ.map(q=>`<div class="card" style="margin-bottom:8px"><b>${esc(q.q)}</b></div>`).join(''):''}
+  ${weakQ.length?`<div class="sec-h"><h2 style="font-size:18px">راجع هذه الأسئلة</h2></div>`+weakQ.map(q=>`<div class="card" style="margin-bottom:8px"><b>${esc(QT(q))}</b></div>`).join(''):''}
   <div class="row" style="margin-top:14px"><button class="btn pri" id="mnew">مقابلة جديدة</button></div>`;}
 function stopTick(){if(MK.tick){clearInterval(MK.tick);MK.tick=null;}}
 function bindMock(){const re=()=>{document.getElementById('app').innerHTML=mock();bindMock();};
